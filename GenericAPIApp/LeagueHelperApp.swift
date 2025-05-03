@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
-struct GenericAPIAppApp: App {
+struct LeagueHelperApp: App {
+    @UIApplicationDelegateAdaptor(LeagueHelperAppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -17,7 +17,11 @@ build/
 DerivedData/
 *.moved-aside
 *.pbxuser
+<<<<<<< HEAD
 !default.pbxuser
+=======
+!default.pbxusera
+>>>>>>> 5e762d77b4d9e9208a223d3bf2310bf04013cac5
 *.mode1v3
 !default.mode1v3
 *.mode2v3
@@ -92,5 +96,8 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+<<<<<<< HEAD
 # API Key
 let apiKey = "RGAPI-f2eebfcb-3afc-4d6f-aac8-ea09f1e94f13"
+=======
+>>>>>>> 5e762d77b4d9e9208a223d3bf2310bf04013cac5

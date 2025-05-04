@@ -12,7 +12,7 @@ struct LeagueHelperApp: App {
     @UIApplicationDelegateAdaptor(LeagueHelperAppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ContentView()
                 .environmentObject(LeagueHelperAuth())
                 .environmentObject(LeagueHelperGoal())
                 .environmentObject(ReloadController())

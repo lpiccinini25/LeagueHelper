@@ -16,7 +16,7 @@ import FirebaseAuth
 import FirebaseAuthUI
 import FirebaseEmailAuthUI
 
-class BareBonesBlogAuth: NSObject, ObservableObject, FUIAuthDelegate {
+class LeagueHelperAuth: NSObject, ObservableObject, FUIAuthDelegate {
     let authUI: FUIAuth? = FUIAuth.defaultAuthUI()
 
     // Multiple providers can be supported! See: https://firebase.google.com/docs/auth/ios/firebaseui

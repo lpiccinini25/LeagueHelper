@@ -14,7 +14,7 @@ struct LeagueHelperApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(LeagueHelperAuth())
-                .environmentObject(LeagueHelperUnkown())
+                .environmentObject(LeagueHelperGoal())
                 .environmentObject(ReloadController())
         }
     }

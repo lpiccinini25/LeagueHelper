@@ -40,16 +40,6 @@
 		7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info 2.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "LeagueHelper" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				LeagueHelperAppDelegate.swift,
-			);
-			target = 7E41FCFC2D5C215400D1349A /* LeagueHelper */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 		7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "LeagueHelper" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
@@ -64,7 +54,6 @@
 		7E41FCFF2D5C215400D1349A /* GenericAPIApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "LeagueHelper" target */,
 				7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "LeagueHelper" target */,
 			);
 			path = GenericAPIApp;

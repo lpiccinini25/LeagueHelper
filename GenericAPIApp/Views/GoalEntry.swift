@@ -65,7 +65,7 @@ struct GoalEntry: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Submit") {
                         submitGoal()
-                        reloadController.shouldReload = true
+                        reloadController.shouldReload.toggle()
                     }
                     .disabled(title.isEmpty)
                 }

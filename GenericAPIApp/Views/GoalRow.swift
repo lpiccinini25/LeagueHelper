@@ -8,6 +8,29 @@
 import SwiftUI
 
 struct GoalRow: View {
+    @EnvironmentObject var auth: LeagueHelperAuth
+    @EnvironmentObject var goalService: LeagueHelperGoal
+    @EnvironmentObject var reloadController: ReloadController
+    
+    @State var error: Error?
+    @State var fetching = false
+    @State var writing = false
+    @State private var showingDeleteAlert = false
+    @State private var deletionResult = ""
+    
+    private var userEmail: String {
+        auth.user?.email ?? "Unknown user"
+    }
+    
+    func DeleteGoal(completion: @escaping (String) -> Void) {
+        goalService.deleteGoal(goal: goal) { success, message in
+            if success {
+                completion("Goal Deleted")
+            } else {
+                completion("An Error Occurred while deleting: \(message)")
+            }
+        }
+    }
     
     var goal: Goal
     
@@ -27,6 +50,25 @@ struct GoalRow: View {
                         .foregroundColor(.black)
                         .bold()
                     Spacer()
+                }
+                
+                Button(action: {
+                    showingDeleteAlert = true
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+                .padding(.vertical, 8)
+                .alert("Delete Goal?", isPresented: $showingDeleteAlert) {
+                    Button("Cancel", role: .cancel) {}
+                    Button("Delete", role: .destructive) {
+                        DeleteGoal { message in
+                            deletionResult = message
+                        }
+                        reloadController.shouldReload.toggle()
+                    }
+                } message: {
+                    Text("This action cannot be undone.")
                 }
             }
             HStack {

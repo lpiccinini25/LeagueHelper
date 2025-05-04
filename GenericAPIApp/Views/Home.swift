@@ -13,7 +13,7 @@ struct Home: View {
 
     var body: some View {
         if let authUI = auth.authUI {
-            GoalsList(requestLogin: $requestLogin, Goals: [])
+            GoalList(requestLogin: $requestLogin, goals: [])
                 .sheet(isPresented: $requestLogin) {
                     AuthenticationViewController(authUI: authUI)
                 }

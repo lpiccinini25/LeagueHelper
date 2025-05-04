@@ -12,7 +12,6 @@
 		7E20DBFA2DC6E04500237372 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBF92DC6E04500237372 /* FirebaseFirestore */; };
 		7E20DBFD2DC6E18E00237372 /* FirebaseAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBFC2DC6E18E00237372 /* FirebaseAuthUI */; };
 		7E20DBFF2DC6E18E00237372 /* FirebaseEmailAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBFE2DC6E18E00237372 /* FirebaseEmailAuthUI */; };
-		7EEDD4012DC6D6E300872845 /* GoogleService-Info 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +36,6 @@
 		7E41FCFD2D5C215400D1349A /* LeagueHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeagueHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E41FD0D2D5C215700D1349A /* LeagueHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E41FD172D5C215700D1349A /* LeagueHelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueHelperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info 2.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
@@ -108,7 +106,6 @@
 				7E41FD1A2D5C215700D1349A /* GenericAPIAppUITests */,
 				7E41FCFE2D5C215400D1349A /* Products */,
 				36A361592D8014440067BE21 /* about.md */,
-				7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */,
 				7EEDD4832DC6DB6E00872845 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -258,7 +255,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EEDD4012DC6D6E300872845 /* GoogleService-Info 2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +452,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = LucaP.GenericAPIApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luca.leaguehelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -484,7 +480,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = LucaP.GenericAPIApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luca.leaguehelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

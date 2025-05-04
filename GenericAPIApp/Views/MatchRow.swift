@@ -52,7 +52,7 @@ struct MatchRow: View {
             
         }
         .padding()
-        .background(match.win == true ? Color(.green.darkened(by: 0.1)) : Color(.red.darkened(by: 0.1)))
+        .background(match.win == true ? Color(.green) : Color(.red))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)

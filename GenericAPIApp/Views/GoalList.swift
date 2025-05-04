@@ -12,8 +12,7 @@ struct GoalList: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var reloadController: ReloadController
     
-    @Binding var requestLogin: Bool
-    @State var goals: [Goal]
+    @State var goals: [Goal] = []
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
@@ -22,17 +21,33 @@ struct GoalList: View {
         auth.user?.email ?? "Unknown user"
     }
     
-    private func goalListView(userEmail: String) -> some View {
-        List($goals, id: \.id) { $goal in
-                    GoalRow(goal: goal)
-        }
-    }
-    
     var body: some View {
-        
         ScrollView {
-            ForEach(goals) { goal in
-                GoalRow(goal: goal)
+            LazyVStack {
+                    ForEach($goals, id: \.id) { $goal in
+                        GoalRow(goal: goal)
+                    }
+                }
+            }
+            .task {
+                fetching = true
+                do {
+                    goals = try await goalService.fetchGoals(userEmail: userEmail)
+                    fetching = false
+                } catch {
+                    self.error = error
+                    fetching = false
+                }
+            }
+            .onChange(of: reloadController.shouldReload) {
+                Task {
+                    do {
+                        goals = try await goalService.fetchGoals(userEmail: userEmail)
+                        fetching = false
+                    } catch {
+                        self.error = error
+                        fetching = false
+                    }
             }
         }
     }

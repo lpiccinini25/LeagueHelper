@@ -55,6 +55,7 @@ class LeagueHelperGoal: ObservableObject {
 
     func fetchGoals(userEmail: String) async throws -> [Goal] {
         var goalQuery = db.collection(COLLECTION_NAME)
+            .whereField("playerEmail", isEqualTo: userEmail)
 
         let querySnapshot = try await goalQuery.getDocuments()
 

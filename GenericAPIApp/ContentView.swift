@@ -11,14 +11,8 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         Home()
-    }v
+    }
 }
-
-#Preview {
-    ContentView()
-        .environmentObject(BareBonesBlogAuth())
-}
-
 
 
 

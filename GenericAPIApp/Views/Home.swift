@@ -28,7 +28,3 @@ struct Home: View {
         }
     }
 }
-
-#Preview {
-    Blog().environmentObject(BareBonesBlogAuth())
-}

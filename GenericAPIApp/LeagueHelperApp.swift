@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseCore
 
 @main
 struct LeagueHelperApp: App {
@@ -14,6 +13,9 @@ struct LeagueHelperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(LeagueHelperAuth())
+                .environmentObject(LeagueHelperUnkown())
+                .environmentObject(ReloadController())
         }
     }
 }

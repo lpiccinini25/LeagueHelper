@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		36A3615B2D8014470067BE21 /* about.md in Sources */ = {isa = PBXBuildFile; fileRef = 36A361592D8014440067BE21 /* about.md */; };
-		7E0CBA4A2DC5A855003E9A35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7E0CBA492DC5A855003E9A35 /* GoogleService-Info.plist */; };
-		7E0CBA4D2DC5A9E9003E9A35 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7E0CBA4C2DC5A9E9003E9A35 /* FirebaseCore */; };
+		7E20DBF82DC6E04500237372 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBF72DC6E04500237372 /* FirebaseAuth */; };
+		7E20DBFA2DC6E04500237372 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBF92DC6E04500237372 /* FirebaseFirestore */; };
+		7E20DBFD2DC6E18E00237372 /* FirebaseAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBFC2DC6E18E00237372 /* FirebaseAuthUI */; };
+		7E20DBFF2DC6E18E00237372 /* FirebaseEmailAuthUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7E20DBFE2DC6E18E00237372 /* FirebaseEmailAuthUI */; };
+		7EEDD4012DC6D6E300872845 /* GoogleService-Info 2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,24 +34,24 @@
 
 /* Begin PBXFileReference section */
 		36A361592D8014440067BE21 /* about.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = about.md; sourceTree = "<group>"; };
-		7E0CBA492DC5A855003E9A35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		7E41FCFD2D5C215400D1349A /* GenericAPIApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenericAPIApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E41FD0D2D5C215700D1349A /* GenericAPIAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GenericAPIAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E41FD172D5C215700D1349A /* GenericAPIAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GenericAPIAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E41FCFD2D5C215400D1349A /* LeagueHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeagueHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E41FD0D2D5C215700D1349A /* LeagueHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E41FD172D5C215700D1349A /* LeagueHelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueHelperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info 2.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "GenericAPIApp" target */ = {
+		7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "LeagueHelper" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				LeagueHelperAppDelegate.swift,
 			);
-			target = 7E41FCFC2D5C215400D1349A /* GenericAPIApp */;
+			target = 7E41FCFC2D5C215400D1349A /* LeagueHelper */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "GenericAPIApp" target */ = {
+		7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "LeagueHelper" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = 7E41FCFB2D5C215400D1349A /* Resources */;
 			membershipExceptions = (
@@ -61,8 +64,8 @@
 		7E41FCFF2D5C215400D1349A /* GenericAPIApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "GenericAPIApp" target */,
-				7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "GenericAPIApp" target */,
+				7E0CBA502DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "LeagueHelper" target */,
+				7E0CBA512DC5AB2A003E9A35 /* Exceptions for "GenericAPIApp" folder in "Copy Bundle Resources" phase from "LeagueHelper" target */,
 			);
 			path = GenericAPIApp;
 			sourceTree = "<group>";
@@ -84,7 +87,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E0CBA4D2DC5A9E9003E9A35 /* FirebaseCore in Frameworks */,
+				7E20DBFF2DC6E18E00237372 /* FirebaseEmailAuthUI in Frameworks */,
+				7E20DBF82DC6E04500237372 /* FirebaseAuth in Frameworks */,
+				7E20DBFD2DC6E18E00237372 /* FirebaseAuthUI in Frameworks */,
+				7E20DBFA2DC6E04500237372 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,26 +119,34 @@
 				7E41FD1A2D5C215700D1349A /* GenericAPIAppUITests */,
 				7E41FCFE2D5C215400D1349A /* Products */,
 				36A361592D8014440067BE21 /* about.md */,
-				7E0CBA492DC5A855003E9A35 /* GoogleService-Info.plist */,
+				7EEDD4002DC6D6E300872845 /* GoogleService-Info 2.plist */,
+				7EEDD4832DC6DB6E00872845 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		7E41FCFE2D5C215400D1349A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7E41FCFD2D5C215400D1349A /* GenericAPIApp.app */,
-				7E41FD0D2D5C215700D1349A /* GenericAPIAppTests.xctest */,
-				7E41FD172D5C215700D1349A /* GenericAPIAppUITests.xctest */,
+				7E41FCFD2D5C215400D1349A /* LeagueHelper.app */,
+				7E41FD0D2D5C215700D1349A /* LeagueHelperTests.xctest */,
+				7E41FD172D5C215700D1349A /* LeagueHelperUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7EEDD4832DC6DB6E00872845 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7E41FCFC2D5C215400D1349A /* GenericAPIApp */ = {
+		7E41FCFC2D5C215400D1349A /* LeagueHelper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E41FD212D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIApp" */;
+			buildConfigurationList = 7E41FD212D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelper" */;
 			buildPhases = (
 				7E41FCF92D5C215400D1349A /* Sources */,
 				7E41FCFA2D5C215400D1349A /* Frameworks */,
@@ -145,17 +159,20 @@
 			fileSystemSynchronizedGroups = (
 				7E41FCFF2D5C215400D1349A /* GenericAPIApp */,
 			);
-			name = GenericAPIApp;
+			name = LeagueHelper;
 			packageProductDependencies = (
-				7E0CBA4C2DC5A9E9003E9A35 /* FirebaseCore */,
+				7E20DBF72DC6E04500237372 /* FirebaseAuth */,
+				7E20DBF92DC6E04500237372 /* FirebaseFirestore */,
+				7E20DBFC2DC6E18E00237372 /* FirebaseAuthUI */,
+				7E20DBFE2DC6E18E00237372 /* FirebaseEmailAuthUI */,
 			);
 			productName = GenericAPIApp;
-			productReference = 7E41FCFD2D5C215400D1349A /* GenericAPIApp.app */;
+			productReference = 7E41FCFD2D5C215400D1349A /* LeagueHelper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7E41FD0C2D5C215700D1349A /* GenericAPIAppTests */ = {
+		7E41FD0C2D5C215700D1349A /* LeagueHelperTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E41FD242D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIAppTests" */;
+			buildConfigurationList = 7E41FD242D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelperTests" */;
 			buildPhases = (
 				7E41FD092D5C215700D1349A /* Sources */,
 				7E41FD0A2D5C215700D1349A /* Frameworks */,
@@ -169,16 +186,16 @@
 			fileSystemSynchronizedGroups = (
 				7E41FD102D5C215700D1349A /* GenericAPIAppTests */,
 			);
-			name = GenericAPIAppTests;
+			name = LeagueHelperTests;
 			packageProductDependencies = (
 			);
 			productName = GenericAPIAppTests;
-			productReference = 7E41FD0D2D5C215700D1349A /* GenericAPIAppTests.xctest */;
+			productReference = 7E41FD0D2D5C215700D1349A /* LeagueHelperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		7E41FD162D5C215700D1349A /* GenericAPIAppUITests */ = {
+		7E41FD162D5C215700D1349A /* LeagueHelperUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7E41FD272D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIAppUITests" */;
+			buildConfigurationList = 7E41FD272D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelperUITests" */;
 			buildPhases = (
 				7E41FD132D5C215700D1349A /* Sources */,
 				7E41FD142D5C215700D1349A /* Frameworks */,
@@ -192,11 +209,11 @@
 			fileSystemSynchronizedGroups = (
 				7E41FD1A2D5C215700D1349A /* GenericAPIAppUITests */,
 			);
-			name = GenericAPIAppUITests;
+			name = LeagueHelperUITests;
 			packageProductDependencies = (
 			);
 			productName = GenericAPIAppUITests;
-			productReference = 7E41FD172D5C215700D1349A /* GenericAPIAppUITests.xctest */;
+			productReference = 7E41FD172D5C215700D1349A /* LeagueHelperUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -222,7 +239,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7E41FCF82D5C215400D1349A /* Build configuration list for PBXProject "GenericAPIApp" */;
+			buildConfigurationList = 7E41FCF82D5C215400D1349A /* Build configuration list for PBXProject "LeagueHelper" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -232,16 +249,17 @@
 			mainGroup = 7E41FCF42D5C215400D1349A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7E0CBA4B2DC5A9E9003E9A35 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7E20DBF62DC6E04500237372 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7E20DBFB2DC6E18E00237372 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7E41FCFE2D5C215400D1349A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7E41FCFC2D5C215400D1349A /* GenericAPIApp */,
-				7E41FD0C2D5C215700D1349A /* GenericAPIAppTests */,
-				7E41FD162D5C215700D1349A /* GenericAPIAppUITests */,
+				7E41FCFC2D5C215400D1349A /* LeagueHelper */,
+				7E41FD0C2D5C215700D1349A /* LeagueHelperTests */,
+				7E41FD162D5C215700D1349A /* LeagueHelperUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,7 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E0CBA4A2DC5A855003E9A35 /* GoogleService-Info.plist in Resources */,
+				7EEDD4012DC6D6E300872845 /* GoogleService-Info 2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,12 +317,12 @@
 /* Begin PBXTargetDependency section */
 		7E41FD0F2D5C215700D1349A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E41FCFC2D5C215400D1349A /* GenericAPIApp */;
+			target = 7E41FCFC2D5C215400D1349A /* LeagueHelper */;
 			targetProxy = 7E41FD0E2D5C215700D1349A /* PBXContainerItemProxy */;
 		};
 		7E41FD192D5C215700D1349A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 7E41FCFC2D5C215400D1349A /* GenericAPIApp */;
+			target = 7E41FCFC2D5C215400D1349A /* LeagueHelper */;
 			targetProxy = 7E41FD182D5C215700D1349A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -499,7 +517,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GenericAPIApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GenericAPIApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeagueHelper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LeagueHelper";
 			};
 			name = Debug;
 		};
@@ -517,7 +535,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GenericAPIApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GenericAPIApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeagueHelper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LeagueHelper";
 			};
 			name = Release;
 		};
@@ -556,7 +574,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7E41FCF82D5C215400D1349A /* Build configuration list for PBXProject "GenericAPIApp" */ = {
+		7E41FCF82D5C215400D1349A /* Build configuration list for PBXProject "LeagueHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E41FD1F2D5C215700D1349A /* Debug */,
@@ -565,7 +583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E41FD212D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIApp" */ = {
+		7E41FD212D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E41FD222D5C215700D1349A /* Debug */,
@@ -574,7 +592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E41FD242D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIAppTests" */ = {
+		7E41FD242D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelperTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E41FD252D5C215700D1349A /* Debug */,
@@ -583,7 +601,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7E41FD272D5C215700D1349A /* Build configuration list for PBXNativeTarget "GenericAPIAppUITests" */ = {
+		7E41FD272D5C215700D1349A /* Build configuration list for PBXNativeTarget "LeagueHelperUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7E41FD282D5C215700D1349A /* Debug */,
@@ -595,21 +613,44 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7E0CBA4B2DC5A9E9003E9A35 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		7E20DBF62DC6E04500237372 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 11.12.0;
+				minimumVersion = 10.29.0;
+			};
+		};
+		7E20DBFB2DC6E18E00237372 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/FirebaseUI-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7E0CBA4C2DC5A9E9003E9A35 /* FirebaseCore */ = {
+		7E20DBF72DC6E04500237372 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7E0CBA4B2DC5A9E9003E9A35 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
+			package = 7E20DBF62DC6E04500237372 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7E20DBF92DC6E04500237372 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E20DBF62DC6E04500237372 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		7E20DBFC2DC6E18E00237372 /* FirebaseAuthUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E20DBFB2DC6E18E00237372 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseAuthUI;
+		};
+		7E20DBFE2DC6E18E00237372 /* FirebaseEmailAuthUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E20DBFB2DC6E18E00237372 /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseEmailAuthUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

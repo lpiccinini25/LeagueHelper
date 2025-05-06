@@ -11,6 +11,7 @@ struct Home: View {
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var reloadController: ReloadController
+    @EnvironmentObject var userService: LeagueHelperUserInfo
     
     @Binding var requestLogin: Bool
     
@@ -18,6 +19,7 @@ struct Home: View {
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
+    @State var changeAccount = false
     
     private var userEmail: String {
         auth.user?.email ?? "Unknown user"
@@ -29,6 +31,9 @@ struct Home: View {
                 if auth.user == nil {
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
+                    Button("Enter/Change Account") {
+                        
+                    }
                     GoalList()
                 }
             }
@@ -61,6 +66,9 @@ struct Home: View {
         }
         .sheet(isPresented: $writing) {
             GoalEntry(goals: $goals, writing: $writing)
+        .sheet(isPresented: $writing) {
+            GoalEntry(goals: $goals, writing: $writing)
+        }
         }
     }
 }

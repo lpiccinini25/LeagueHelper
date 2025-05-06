@@ -7,22 +7,8 @@
 
 import SwiftUI
 
-struct MatchList: View {
-    
-    var MatchList: [Match]
-    
-    var body: some View {
-        
-        ScrollView {
-            ForEach(MatchList) { game in
-                MatchRow(match: game)
-            }
-        }
-    }
-}
-
 // MARK: - API Key
-let apiKey = "RGAPI-6c1c7cd6-8b66-4572-a6c7-b60a03e5e90d"
+let apiKey = "RGAPI-390f8941-33ae-48ca-824a-051e99853dd6"
 
 // MARK: - Match Info
 
@@ -48,18 +34,6 @@ struct Participant: Codable {
     let baronKills: Int
 }
 
-// MARK: - Async Fetch Function
-func fetchPUUID(username: String, tagline: String) async throws -> String {
-    let baseURL = "https://americas.api.riotgames.com"
-    guard let url = URL(string: "\(baseURL)/riot/account/v1/accounts/by-riot-id/\(username)/\(tagline)?api_key=\(apiKey)") else {
-        throw URLError(.badURL)
-    }
-
-    let (data, _) = try await URLSession.shared.data(from: url)
-    let decoded = try JSONDecoder().decode(RiotAccount.self, from: data)
-    return decoded.puuid
-}
-
 func fetchMATCHES(puuid: String) async throws ->
     [String] {
         let baseURL = "https://americas.api.riotgames.com"
@@ -83,128 +57,84 @@ func fetchMATCHINFO(matchID: String) async throws -> BaseDict {
 
 // MARK: - ContentView
 struct MatchList: View {
+    @EnvironmentObject var userService: LeagueHelperUserInfo
+    @EnvironmentObject var auth: LeagueHelperAuth
+    @EnvironmentObject var reloadController: ReloadController
+    @EnvironmentObject var goalService: LeagueHelperGoal
     
     @State private var puuid: String = "Fetching..."
     @State private var usernametagline: String = ""
     @State private var username: String = ""
     @State private var tagline: String = ""
-    @State private var Matches: [String] = []
-    @State private var PlayerMatches: [Match] = []
+    @State private var MatchIDs: [String] = []
+    @State private var MatchList: [Match] = []
     @State private var showAlert: Bool = false
     @State private var logoOpacity: Double = 0.0
+    @State private var userInfo = UserInfo(
+      playerEmail: "",
+      riotID:     "",
+      PUUID:      "",
+      notes:      []
+    )
+    @State private var goals: [Goal] = []
+    
+    private var playerEmail: String {
+        auth.user?.email ?? "Unknown user"
+    }
+    
+    private func fetchUserInfo() async throws {
+        do {
+            userInfo = try await userService.fetchUserInfo(userEmail: playerEmail)
+            print(userInfo.PUUID)
+        } catch {
+            print("Failed to update userInfo:", error)
+        }
+    }
     
     var body: some View {
-        VStack {
-            Image("lol_logo") // Elias Segura: Logo Implementation
-                .resizable()
-                .position(x: 75, y: 40)
-                .frame(width: 150, height: 80)
-                .opacity(logoOpacity)
-                .onAppear {
-                    withAnimation(.easeIn(duration: 2)){
-                        logoOpacity = 1
+            VStack {
+                ScrollView {
+                    ForEach(MatchList) { game in
+                        
+                        MatchRow(match: game)
                     }
                 }
-        
-            
-            TextField(
-                "Enter username#tagline (Example: llimeincoconut#0000)",
-                text: $usernametagline
+            }
+            .background( // Elias Segura: Background Graphics
+                LinearGradient(
+                    gradient: Gradient(colors: [.green.opacity(0.2),
+                                                .cyan.opacity(0.4)]),
+                    startPoint: .topTrailing,
+                    endPoint: .bottomTrailing
+                )
             )
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            .position(x: 200, y: 10)
-            .frame(width: 403, height: 28)
-
-            let parts = usernametagline.components(separatedBy: "#")
-            
-            Button(action: { // Elias Segura: Button Implementation
-                guard parts.count == 2 else {
-                    showAlert = true
-                    return
+            .task {
+                // this runs once when the view appears
+                do {
+                    try await fetchUserInfo()
+                    goals = try await goalService.fetchGoalsQuantitative(userEmail: playerEmail)
+                } catch {
+                    print("Failed to fetch UserInfo:", error)
                 }
-                username = parts[0]
-                tagline = parts[1]
-                Task {
-                    await fetchPuuid()
-                    await fetchMatches()
-                    await fetchMatchInfo(Matches: Matches)
-                }
-            }) {
-                Text("Search")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .frame(width: 405, height: 60)
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.gray.darkened(by: 0.4), .green.darkened(by: 0.4)]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomLeading
-                        )
-                        .cornerRadius(10)
-                        .ignoresSafeArea(edges: .top)
-                    )
+                await fetchMatches()
+                await fetchMatchInfo(Matches: MatchIDs)
             }
-            .position(x: 200, y: 30)
-            .frame(width: 400, height: 60)
-            .alert(isPresented: $showAlert) { // Elias Segura
-                Alert(
-                    title: Text("Invalid Input"),
-                    message: Text("Please enter a valid username#tagline."),
-                    dismissButton: .default(Text("OK"))
-                    )}
-            .onSubmit {
-                guard parts.count == 2 else {
-                    showAlert = true
-                    return
-                }
-                username = parts[0]
-                tagline = parts[1]
-                Task {
-                    await fetchPuuid()
-                    
-                    await fetchMatches()
-                    
-                    await fetchMatchInfo(Matches: Matches)
-                }
-            }
-            MatchList(MatchList: PlayerMatches)
-            
-            }
-        
-        .background( // Elias Segura: Backgound Graphics
-            LinearGradient(
-                gradient: Gradient(colors: [.green.opacity(0.2), .cyan.opacity(0.4)]),
-                startPoint: .topTrailing,
-                endPoint: .bottomTrailing
-            )
-        )
-        
-        
         }
     
     
     // MARK: - Helper Method
-    private func fetchPuuid() async {
-        do {
-            let puuidResult = try await fetchPUUID(username: username, tagline: tagline)
-            puuid = puuidResult
-        } catch {
-            puuid = "Error fetching PUUID"
-        }
-    }
     
     private func fetchMatches() async {
         do {
-            let matchesResult = try await fetchMATCHES(puuid: puuid)
-            Matches = matchesResult
+            let matchesResult = try await fetchMATCHES(puuid: userInfo.PUUID)
+            MatchIDs = matchesResult
         } catch {
-            Matches = []
+            MatchIDs = []
         }
     }
     
     private func fetchMatchInfo(Matches: [String]) async {
-        PlayerMatches = []
+        MatchList = []
         var game = 0
         for match in Matches {
             do {
@@ -241,7 +171,7 @@ struct MatchList: View {
                 let ThisMatch = Match(id: game, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
                 game += 1
                 await MainActor.run {
-                    PlayerMatches.append(ThisMatch)
+                    MatchList.append(ThisMatch)
                 }
             } catch {
                 

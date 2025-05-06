@@ -11,7 +11,8 @@ struct GoalEntry: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var reloadController: ReloadController
-
+    @Environment(\.dismiss) private var dismiss
+    
     @Binding var goals: [Goal]
     @Binding var writing: Bool
 

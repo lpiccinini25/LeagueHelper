@@ -16,6 +16,7 @@ struct LeagueHelperApp: App {
                 .environmentObject(LeagueHelperAuth())
                 .environmentObject(LeagueHelperGoal())
                 .environmentObject(ReloadController())
+                .environmentObject(LeagueHelperUserInfo())
         }
     }
 }

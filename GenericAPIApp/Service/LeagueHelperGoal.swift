@@ -53,9 +53,41 @@ class LeagueHelperGoal: ObservableObject {
         return ref?.documentID ?? ""
     }
 
-    func fetchGoals(userEmail: String) async throws -> [Goal] {
+    func fetchGoalsEmail(userEmail: String) async throws -> [Goal] {
         var goalQuery = db.collection(COLLECTION_NAME)
             .whereField("playerEmail", isEqualTo: userEmail)
+
+        let querySnapshot = try await goalQuery.getDocuments()
+
+        return try querySnapshot.documents.map {
+                guard let title = $0.get("title") as? String,
+                let quantitative = $0.get("quantitative") as? Bool,
+                let quantity = $0.get("quantity") as? Int,
+                let playerEmail = $0.get("playerEmail") as? String,
+                let successes = $0.get("successes") as? [String],
+                let fails = $0.get("fails") as? [String]
+            else {
+                throw ArticleServiceError.mismatchedDocumentError
+            }
+
+
+            return Goal(
+                id: $0.documentID,
+                title: title,
+                quantitative: quantitative,
+                quantity: quantity,
+                playerEmail: playerEmail,
+                successes: successes,
+                fails: fails
+            )
+        }
+    }
+    
+    func fetchGoalsQuantitative(userEmail: String) async throws -> [Goal] {
+        var goalQuery = db.collection(COLLECTION_NAME)
+            .whereField("playerEmail", isEqualTo: userEmail)
+            .whereField("quantitative", isEqualTo: true)
+        
 
         let querySnapshot = try await goalQuery.getDocuments()
 

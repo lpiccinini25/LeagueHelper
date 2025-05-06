@@ -23,21 +23,30 @@ class LeagueHelperUserInfo: ObservableObject {
 
     @Published var error: Error?
 
-    func createUser(userInfo: UserInfo) -> String {
+    func createUser(playerEmail: String, userInfo: UserInfo) async throws {
         var ref: DocumentReference? = nil
-
-        ref = db.collection(UserInformation).addDocument(data: [
-            "playerEmail": userInfo.playerEmail,
-            "riotID": userInfo.riotID,
-            "PUUID": userInfo.PUUID,
-            "notes": userInfo.notes,
-        ]) { possibleError in
-            if let actualError = possibleError {
-                self.error = actualError
+        let docRef = db.collection(UserInformation)
+            .whereField("playerEmail", isEqualTo: playerEmail)
+        
+        let userSnapshot = try await docRef.getDocuments()
+        
+        
+        print("chungus")
+        if !userSnapshot.documents.isEmpty {
+            print("exists")
+        } else {
+            print("success")
+            ref = db.collection(UserInformation).addDocument(data: [
+                "playerEmail": userInfo.playerEmail,
+                "riotID": userInfo.riotID,
+                "PUUID": userInfo.PUUID,
+                "notes": userInfo.notes,
+            ]) { possibleError in
+                if let actualError = possibleError {
+                    self.error = actualError
+                }
             }
         }
-
-        return ref?.documentID ?? ""
     }
 
     func fetchUserInfo(userEmail: String) async throws -> UserInfo {
@@ -67,7 +76,7 @@ class LeagueHelperUserInfo: ObservableObject {
         }
     
     
-    func updateRiotId(playerEmail: String, riotID: String, gameID: String) async throws {
+    func updateRiotId(playerEmail: String, riotID: String) async throws {
         let userQuery = db.collection(UserInformation)
             .whereField("playerEmail", isEqualTo: playerEmail)
         

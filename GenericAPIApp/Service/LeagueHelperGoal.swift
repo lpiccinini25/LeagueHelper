@@ -19,9 +19,9 @@ enum ArticleServiceError: Error {
 
 class LeagueHelperGoal: ObservableObject {
     private let db = Firestore.firestore()
-
+    
     @State private var showingAlert = false
-
+    
     @Published var error: Error?
     func deleteGoal(goal: Goal, completion: @escaping (Bool, String) -> Void) {
         db.collection(COLLECTION_NAME).document(goal.id).delete() { possibleError in
@@ -33,10 +33,10 @@ class LeagueHelperGoal: ObservableObject {
             }
         }
     }
-
+    
     func createGoal(goal: Goal) -> String {
         var ref: DocumentReference? = nil
-
+        
         ref = db.collection(COLLECTION_NAME).addDocument(data: [
             "title": goal.title,
             "quantitative": goal.quantitative,
@@ -49,29 +49,29 @@ class LeagueHelperGoal: ObservableObject {
                 self.error = actualError
             }
         }
-
+        
         return ref?.documentID ?? ""
     }
-
+    
     func fetchGoals(userEmail: String) async throws -> [Goal] {
         let goalQuery = db.collection(COLLECTION_NAME)
             .whereField("playerEmail", isEqualTo: userEmail)
         print("fetching")
-
+        
         let querySnapshot = try await goalQuery.getDocuments()
-
+        
         return try querySnapshot.documents.map {
-                guard let title = $0.get("title") as? String,
-                let quantitative = $0.get("quantitative") as? Bool,
-                let quantity = $0.get("quantity") as? Int,
-                let playerEmail = $0.get("playerEmail") as? String,
-                let successes = $0.get("successes") as? [String],
-                let fails = $0.get("fails") as? [String]
+            guard let title = $0.get("title") as? String,
+                  let quantitative = $0.get("quantitative") as? Bool,
+                  let quantity = $0.get("quantity") as? Int,
+                  let playerEmail = $0.get("playerEmail") as? String,
+                  let successes = $0.get("successes") as? [String],
+                  let fails = $0.get("fails") as? [String]
             else {
                 throw ArticleServiceError.mismatchedDocumentError
             }
-
-
+            
+            
             return Goal(
                 id: $0.documentID,
                 title: title,
@@ -96,7 +96,7 @@ class LeagueHelperGoal: ObservableObject {
             let ref = doc.reference
             let goal = doc.get("title") as? String ?? "(no title)"
             let threshold = doc.get("quantity") as? Int ?? 0
-
+            
             for match in MatchList {
                 
                 let value: Int
@@ -181,26 +181,21 @@ class LeagueHelperGoal: ObservableObject {
         }
     }
     
-    func checkCompletion(goal: Goal, matchID: String) -> String {
-        var successes: [String] = []
-        var fails: [String] = []
-        let goalRef = db.collection(COLLECTION_NAME).document(goal.id)
-        goalRef.getDocument { snapshot, error in
-            guard let snapshot = snapshot, error == nil else {
-                print("Error fetching doc:", error?.localizedDescription ?? "Unknown")
-                return
-            }
-            // Now you can pull fields out of the snapshot:
-            successes = snapshot.get("successes") as? [String] ?? []
-            fails     = snapshot.get("fails")     as? [String] ?? []
-        }
-        
-        if successes.contains(matchID) {
-            return "Accomplished"
-        } else if fails.contains(matchID) {
-            return "Failed"
-        } else {
+    func checkCompletion(goal: Goal, matchID: String) async -> String {
+        let docRef = db.collection(COLLECTION_NAME).document(goal.id)
+        do {
+            // This suspends until the document arrives
+            let snapshot = try await docRef.getDocument()
+            
+            let successes = snapshot.get("successes") as? [String] ?? []
+            let fails     = snapshot.get("fails")     as? [String] ?? []
+            
+            if successes.contains(matchID) { return "Accomplished" }
+            if fails.contains(matchID)     { return "Failed"       }
             return "Not Classified"
+        } catch {
+            print("Error fetching:", error)
+            return "Error"
         }
     }
 }

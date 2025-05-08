@@ -13,48 +13,65 @@ struct GoalCheckbox: View {
     
     var goal: Goal
     var matchID: String
-    @State var state: String = "Deciding State..."
+    @State private var state: String = "Deciding State..."
 
     var body: some View {
         numericGoalFields
         .buttonStyle(PlainButtonStyle())
         .task {
-            state = goalService.checkCompletion(goal: goal, matchID: matchID)
+            state = await goalService.checkCompletion(goal: goal, matchID: matchID)
         }
     }
     
     private var numericGoalFields: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Set Accomplishment State")
+            Text("Goal State")
                 .font(.headline)
 
-            Menu {
-                Button("Accomplished") { state = "Accomplished"
-                    
+            if goal.quantitative {
+                Button() {
+                } label: {
+                    Label(state, systemImage: "chevron.down")
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            state == "Accomplished" ? Color.green
+                          : state == "Failed"       ? Color.red
+                                                    : Color.gray
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
-                Button("Failed") { state = "Failed"
-                    
+                
+            } else {
+                Menu {
+                    Button("Accomplished") { state = "Accomplished"
+                        
+                    }
+                    Button("Failed") { state = "Failed"
+                        
+                    }
+                } label: {
+                    Label(state, systemImage: "chevron.down")
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            state == "Accomplished" ? Color.green
+                          : state == "Failed"       ? Color.red
+                                                    : Color.gray
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
-            } label: {
-                Label(state, systemImage: "chevron.down")
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(
-                        state == "Accomplished" ? Color.green
-                      : state == "Failed"       ? Color.red
-                                                : Color.gray
-                    )
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
-            .keyboardType(.numberPad)
-            .textFieldStyle(.roundedBorder)
-            .onChange(of: state) {
-                Task {
-                    if state == "Accomplished" {
-                        goalService.updateCompletion(goal: goal, complete: true, gameID: matchID)
-                    } else if state == "Failed" {
-                        goalService.updateCompletion(goal: goal, complete: false, gameID: matchID)
+                .keyboardType(.numberPad)
+                .textFieldStyle(.roundedBorder)
+                .onChange(of: state) {
+                    Task {
+                        if state == "Accomplished" {
+                            goalService.updateCompletion(goal: goal, complete: true, gameID: matchID)
+                        } else if state == "Failed" {
+                            goalService.updateCompletion(goal: goal, complete: false, gameID: matchID)
+                        }
                     }
                 }
             }

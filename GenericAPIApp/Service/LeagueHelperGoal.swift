@@ -153,8 +153,8 @@ class LeagueHelperGoal: ObservableObject {
         
         if complete {
             goalRef.updateData([
-                "successes": FieldValue.arrayUnion([gameID])
-                
+                "successes": FieldValue.arrayUnion([gameID]),
+                "fails": FieldValue.arrayRemove([gameID])
             ]) { error in
                 if let error = error{
                     DispatchQueue.main.async {
@@ -167,7 +167,8 @@ class LeagueHelperGoal: ObservableObject {
             }
         } else {
             goalRef.updateData([
-                "fails": FieldValue.arrayRemove([gameID])
+                "fails": FieldValue.arrayUnion([gameID]),
+                "successes": FieldValue.arrayRemove([gameID])
             ]) { error in
                 if let error = error{
                     DispatchQueue.main.async {

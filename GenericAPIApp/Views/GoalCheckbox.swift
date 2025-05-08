@@ -10,6 +10,7 @@ import SwiftUI
 struct GoalCheckbox: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var auth: LeagueHelperAuth
+    @EnvironmentObject var reloadController: ReloadController
     
     var goal: Goal
     var matchID: String
@@ -25,7 +26,7 @@ struct GoalCheckbox: View {
     
     private var numericGoalFields: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Goal State")
+            Text("Goal State")ter
                 .font(.headline)
 
             if goal.quantitative {
@@ -46,10 +47,12 @@ struct GoalCheckbox: View {
             } else {
                 Menu {
                     Button("Accomplished") { state = "Accomplished"
-                        
+                        goalService.updateCompletion(goal: goal, complete: true, gameID: matchID)
+                        reloadController.shouldReload.toggle()
                     }
                     Button("Failed") { state = "Failed"
-                        
+                        goalService.updateCompletion(goal: goal, complete: false, gameID: matchID)
+                        reloadController.shouldReload.toggle()
                     }
                 } label: {
                     Label(state, systemImage: "chevron.down")
@@ -65,15 +68,6 @@ struct GoalCheckbox: View {
                 }
                 .keyboardType(.numberPad)
                 .textFieldStyle(.roundedBorder)
-                .onChange(of: state) {
-                    Task {
-                        if state == "Accomplished" {
-                            goalService.updateCompletion(goal: goal, complete: true, gameID: matchID)
-                        } else if state == "Failed" {
-                            goalService.updateCompletion(goal: goal, complete: false, gameID: matchID)
-                        }
-                    }
-                }
             }
         }
     }

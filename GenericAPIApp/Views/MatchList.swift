@@ -116,12 +116,21 @@ struct MatchList: View {
                 do {
                     try await fetchUserInfo()
                     await fetchMatches()
-                    await fetchMatchInfo(Matches: MatchIDs)
+                    await fetchMatchInfo(matches: MatchIDs)
                     try await goalService.updateGoalsQuantitative(userEmail: playerEmail, MatchList: MatchList)
                 } catch {
                     print("Failed to fetch UserInfo:", error)
                 }
                 
+            }
+            .onChange(of: reloadController.shouldReload) {
+                Task {
+                    do {
+                        try await goalService.updateGoalsQuantitative(userEmail: playerEmail, MatchList: MatchList)
+                    } catch {
+                        print("Failed to fetch UserInfo:", error)
+                    }
+                }
             }
         }
     
@@ -137,12 +146,18 @@ struct MatchList: View {
         }
     }
     
-    private func fetchMatchInfo(Matches: [String]) async {
+    private func fetchMatchInfo(matches: [String]) async {
+        let delayNS: UInt64 = 1_200_000_000  // 1.2s in nanoseconds
         MatchList = []
-        var game = 0
-        for match in Matches {
+        
+        for (index, matchID) in matches.enumerated() {
+            // after the very first request, pause to respect rate limit
+            if index > 0 {
+                try? await Task.sleep(nanoseconds: delayNS)
+            }
+            
             do {
-                let GameInfo = try await fetchMATCHINFO(matchID: match)
+                let GameInfo = try await fetchMATCHINFO(matchID: matchID)
                 var i = 0
                 var playerIndex = 0
                 while i < 10 {
@@ -172,13 +187,13 @@ struct MatchList: View {
                 let win = playerStats.win
                 let champion = playerStats.championName
                 
-                let ThisMatch = Match(matchID: match, id: game, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
-                game += 1
+                let ThisMatch = Match(matchID: matchID, id: index, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
                 await MainActor.run {
                     MatchList.append(ThisMatch)
+                    reloadController.shouldReload.toggle()
                 }
             } catch {
-                
+                print("Failed to fetch \(matchID): \(error)")
             }
         }
     }

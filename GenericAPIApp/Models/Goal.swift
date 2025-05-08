@@ -14,6 +14,6 @@ struct Goal: Hashable, Codable, Identifiable {
     var quantitative: Bool
     var quantity: Int
     var playerEmail: String
-    var successes: [Int]
-    var fails: [Int]
+    var successes: [String]
+    var fails: [String]
 }

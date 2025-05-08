@@ -65,8 +65,8 @@ class LeagueHelperGoal: ObservableObject {
                 let quantitative = $0.get("quantitative") as? Bool,
                 let quantity = $0.get("quantity") as? Int,
                 let playerEmail = $0.get("playerEmail") as? String,
-                let successes = $0.get("successes") as? [Int],
-                let fails = $0.get("fails") as? [Int]
+                let successes = $0.get("successes") as? [String],
+                let fails = $0.get("fails") as? [String]
             else {
                 throw ArticleServiceError.mismatchedDocumentError
             }
@@ -95,7 +95,7 @@ class LeagueHelperGoal: ObservableObject {
         for doc in querySnapshot.documents {
             let ref = doc.reference
             let goal = doc.get("title") as? String ?? "(no title)"
-            let threshold = doc.get("threshold") as? Int ?? 0
+            let threshold = doc.get("quantity") as? Int ?? 0
 
             for match in MatchList {
                 

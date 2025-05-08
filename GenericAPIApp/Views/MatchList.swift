@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - API Key
-let apiKey = "RGAPI-390f8941-33ae-48ca-824a-051e99853dd6"
+let apiKey = "RGAPI-9945bfe5-d64e-4da7-94df-93bc83d71e71"
 
 // MARK: - Match Info
 
@@ -95,8 +95,11 @@ struct MatchList: View {
             VStack {
                 ScrollView {
                     ForEach(MatchList) { game in
-                        
-                        MatchRow(match: game)
+                        NavigationLink {
+                            MatchDetail(match: game)
+                        } label: {
+                            MatchRow(match: game)
+                        }
                     }
                 }
             }
@@ -112,12 +115,13 @@ struct MatchList: View {
                 // this runs once when the view appears
                 do {
                     try await fetchUserInfo()
-                    goals = try await goalService.fetchGoalsQuantitative(userEmail: playerEmail)
+                    await fetchMatches()
+                    await fetchMatchInfo(Matches: MatchIDs)
+                    try await goalService.updateGoalsQuantitative(userEmail: playerEmail, MatchList: MatchList)
                 } catch {
                     print("Failed to fetch UserInfo:", error)
                 }
-                await fetchMatches()
-                await fetchMatchInfo(Matches: MatchIDs)
+                
             }
         }
     

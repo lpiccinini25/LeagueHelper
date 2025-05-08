@@ -35,7 +35,6 @@ struct GoalRow: View {
     var goal: Goal
     
     var body: some View {
-
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 if goal.quantitative {
@@ -72,9 +71,11 @@ struct GoalRow: View {
                 }
             }
             HStack {
-                Text("\(goal.successes)").foregroundColor(.green)
+                Text("\(goal.successes.count)")
+                  .foregroundColor(.green)
                 + Text(" vs ")
-                + Text("\(goal.fails)").foregroundColor(.red)
+                + Text("\(goal.fails.count)")
+                  .foregroundColor(.red)
             }
         }
         .padding()

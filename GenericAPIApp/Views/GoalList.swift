@@ -21,18 +21,28 @@ struct GoalList: View {
         auth.user?.email ?? "Unknown user"
     }
     
+    func printGoal(goal: Goal) -> Void {
+        print(goal.title)
+    }
+    
     var body: some View {
         ScrollView {
             LazyVStack {
+                Text("🔢 Goals count: \(goals.count)")
                     ForEach($goals, id: \.id) { $goal in
                         GoalRow(goal: goal)
+                            .onAppear {
+                                printGoal(goal:goal)
+                            }
                     }
                 }
             }
             .task {
                 fetching = true
                 do {
+                    print("▶️ about to fetch for user:", userEmail)
                     goals = try await goalService.fetchGoals(userEmail: userEmail)
+                    print("goals: \(goals)")
                     fetching = false
                 } catch {
                     self.error = error

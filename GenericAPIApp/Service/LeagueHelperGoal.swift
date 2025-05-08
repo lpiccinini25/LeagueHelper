@@ -53,9 +53,10 @@ class LeagueHelperGoal: ObservableObject {
         return ref?.documentID ?? ""
     }
 
-    func fetchGoalsEmail(userEmail: String) async throws -> [Goal] {
-        var goalQuery = db.collection(COLLECTION_NAME)
+    func fetchGoals(userEmail: String) async throws -> [Goal] {
+        let goalQuery = db.collection(COLLECTION_NAME)
             .whereField("playerEmail", isEqualTo: userEmail)
+        print("fetching")
 
         let querySnapshot = try await goalQuery.getDocuments()
 
@@ -64,8 +65,8 @@ class LeagueHelperGoal: ObservableObject {
                 let quantitative = $0.get("quantitative") as? Bool,
                 let quantity = $0.get("quantity") as? Int,
                 let playerEmail = $0.get("playerEmail") as? String,
-                let successes = $0.get("successes") as? [String],
-                let fails = $0.get("fails") as? [String]
+                let successes = $0.get("successes") as? [Int],
+                let fails = $0.get("fails") as? [Int]
             else {
                 throw ArticleServiceError.mismatchedDocumentError
             }
@@ -83,40 +84,72 @@ class LeagueHelperGoal: ObservableObject {
         }
     }
     
-    func fetchGoalsQuantitative(userEmail: String) async throws -> [Goal] {
+    func updateGoalsQuantitative(userEmail: String, MatchList: [Match]) async throws {
         var goalQuery = db.collection(COLLECTION_NAME)
             .whereField("playerEmail", isEqualTo: userEmail)
             .whereField("quantitative", isEqualTo: true)
         
-
+        
         let querySnapshot = try await goalQuery.getDocuments()
-
-        return try querySnapshot.documents.map {
-                guard let title = $0.get("title") as? String,
-                let quantitative = $0.get("quantitative") as? Bool,
-                let quantity = $0.get("quantity") as? Int,
-                let playerEmail = $0.get("playerEmail") as? String,
-                let successes = $0.get("successes") as? [String],
-                let fails = $0.get("fails") as? [String]
-            else {
-                throw ArticleServiceError.mismatchedDocumentError
+        
+        for doc in querySnapshot.documents {
+            let ref = doc.reference
+            let goal = doc.get("title") as? String ?? "(no title)"
+            let quantity = doc.get("quantity") as? Int ?? 0
+            try await ref.updateData(["successes": [],
+                                "fails": []])
+            
+            for match in MatchList {
+                
+                let value: Int
+                switch goal {
+                case "kills":
+                    value = match.kills
+                case "assists":
+                    value = match.assists
+                case "deaths":
+                    value = match.deaths
+                default:
+                    continue    // unknown field → skip
+                }
+                
+                print(goal)
+                print(value)
+                
+                if value >= quantity {
+                    ref.updateData([
+                        "successes": FieldValue.arrayUnion([match.id])
+                    ]) { error in
+                        if let error = error{
+                            DispatchQueue.main.async {
+                                self.error = error
+                            }
+                            print("Update Failed: \(error.localizedDescription)")
+                        } else {
+                            print("Update Succeeded")
+                        }
+                        
+                    }
+                } else {
+                    ref.updateData([
+                        "fails": FieldValue.arrayUnion([match.id])
+                    ]) { error in
+                        if let error = error{
+                            DispatchQueue.main.async {
+                                self.error = error
+                            }
+                            print("Update Failed: \(error.localizedDescription)")
+                        } else {
+                            print("Update Succeeded")
+                        }
+                    }
+                }
             }
-
-
-            return Goal(
-                id: $0.documentID,
-                title: title,
-                quantitative: quantitative,
-                quantity: quantity,
-                playerEmail: playerEmail,
-                successes: successes,
-                fails: fails
-            )
         }
     }
     
-    func updateCompletion(goalID: String, complete: Bool, gameID: String) {
-        let goalRef = db.collection(COLLECTION_NAME).document(goalID)
+    func updateCompletion(goal: Goal, complete: Bool, gameID: String) {
+        let goalRef = db.collection(COLLECTION_NAME).document(goal.id)
         
         if complete {
             goalRef.updateData([

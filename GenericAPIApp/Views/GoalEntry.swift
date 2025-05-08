@@ -80,7 +80,7 @@ struct GoalEntry: View {
                 .font(.headline)
 
             Menu {
-                Button("Creep Score Per Minute") { title = "Creep Score Per Minute" }
+                Button("kills") { title = "kills" }
                 Button("Deaths Per Game") { title = "Deaths Per Game" }
             } label: {
                 Label(title.isEmpty ? "Choose a Goal" : title, systemImage: "chevron.down")

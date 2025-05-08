@@ -26,7 +26,7 @@ struct GoalCheckbox: View {
     
     private var numericGoalFields: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Goal State")ter
+            Text("Goal State")
                 .font(.headline)
 
             if goal.quantitative {

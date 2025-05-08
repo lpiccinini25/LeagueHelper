@@ -95,10 +95,8 @@ class LeagueHelperGoal: ObservableObject {
         for doc in querySnapshot.documents {
             let ref = doc.reference
             let goal = doc.get("title") as? String ?? "(no title)"
-            let quantity = doc.get("quantity") as? Int ?? 0
-            try await ref.updateData(["successes": [],
-                                "fails": []])
-            
+            let threshold = doc.get("threshold") as? Int ?? 0
+
             for match in MatchList {
                 
                 let value: Int
@@ -116,9 +114,9 @@ class LeagueHelperGoal: ObservableObject {
                 print(goal)
                 print(value)
                 
-                if value >= quantity {
+                if value >= threshold {
                     ref.updateData([
-                        "successes": FieldValue.arrayUnion([match.id])
+                        "successes": FieldValue.arrayUnion([match.matchID])
                     ]) { error in
                         if let error = error{
                             DispatchQueue.main.async {
@@ -132,7 +130,7 @@ class LeagueHelperGoal: ObservableObject {
                     }
                 } else {
                     ref.updateData([
-                        "fails": FieldValue.arrayUnion([match.id])
+                        "fails": FieldValue.arrayUnion([match.matchID])
                     ]) { error in
                         if let error = error{
                             DispatchQueue.main.async {
@@ -177,6 +175,29 @@ class LeagueHelperGoal: ObservableObject {
                     print("Update Succeeded")
                 }
             }
+        }
+    }
+    
+    func checkCompletion(goal: Goal, matchID: String) -> String {
+        var successes: [String] = []
+        var fails: [String] = []
+        let goalRef = db.collection(COLLECTION_NAME).document(goal.id)
+        goalRef.getDocument { snapshot, error in
+            guard let snapshot = snapshot, error == nil else {
+                print("Error fetching doc:", error?.localizedDescription ?? "Unknown")
+                return
+            }
+            // Now you can pull fields out of the snapshot:
+            successes = snapshot.get("successes") as? [String] ?? []
+            fails     = snapshot.get("fails")     as? [String] ?? []
+        }
+        
+        if successes.contains(matchID) {
+            return "Met"
+        } else if fails.contains(matchID) {
+            return "Unmet"
+        } else {
+            return "Not Classified"
         }
     }
 }

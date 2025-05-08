@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Match: Hashable, Codable, Identifiable {
+    var matchID: String
     var id: Int
     var assists: Int
     var kills: Int

@@ -30,9 +30,16 @@ func fetchChampionIcon(from urlString: String,
 
 struct MatchDetail: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
+    @EnvironmentObject var auth: LeagueHelperAuth
     
     @State private var champIcon: UIImage? = nil
+    @State var fetching = false
+    @State var goals: [Goal] = []
     var match: Match
+    
+    private var playerEmail: String {
+        auth.user?.email ?? "Unknown user"
+    }
     
     var body: some View {
         
@@ -40,6 +47,7 @@ struct MatchDetail: View {
             ScrollView {
                 if let champIcon = champIcon {
                     CircleImage(Icon: champIcon)
+                    
                 } else {
                     ProgressView()
                         .frame(width: 100, height: 100)

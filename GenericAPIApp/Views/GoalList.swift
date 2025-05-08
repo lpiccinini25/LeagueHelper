@@ -30,7 +30,7 @@ struct GoalList: View {
             LazyVStack {
                 Text("🔢 Goals count: \(goals.count)")
                     ForEach($goals, id: \.id) { $goal in
-                        GoalRow(goal: goal)
+                        GoalRowHome(goal: goal)
                             .onAppear {
                                 printGoal(goal:goal)
                             }

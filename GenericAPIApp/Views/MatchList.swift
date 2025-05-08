@@ -172,7 +172,7 @@ struct MatchList: View {
                 let win = playerStats.win
                 let champion = playerStats.championName
                 
-                let ThisMatch = Match(id: game, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
+                let ThisMatch = Match(matchID: match, id: game, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
                 game += 1
                 await MainActor.run {
                     MatchList.append(ThisMatch)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GoalRow: View {
+struct GoalRowHome: View {
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var reloadController: ReloadController

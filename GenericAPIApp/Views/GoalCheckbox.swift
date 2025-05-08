@@ -12,21 +12,52 @@ struct GoalCheckbox: View {
     @EnvironmentObject var auth: LeagueHelperAuth
     
     var goal: Goal
-    var 
+    var matchID: String
+    @State var state: String = "Deciding State..."
 
     var body: some View {
-        Button(action: { isChecked.toggle() }) {
-            HStack {
-                Image(systemName: isChecked ? "checkmark.square" : "square")
-                    .font(.title2)
-                if let label = goal.title {
-                    Text(label)
-                }
-            }
-        }
+        numericGoalFields
         .buttonStyle(PlainButtonStyle())
         .task {
-            status = goalService.checkCompletion(goal: goal, matchID: <#T##String#>)
+            state = goalService.checkCompletion(goal: goal, matchID: matchID)
+        }
+    }
+    
+    private var numericGoalFields: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Set Accomplishment State")
+                .font(.headline)
+
+            Menu {
+                Button("Accomplished") { state = "Accomplished"
+                    
+                }
+                Button("Failed") { state = "Failed"
+                    
+                }
+            } label: {
+                Label(state, systemImage: "chevron.down")
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        state == "Accomplished" ? Color.green
+                      : state == "Failed"       ? Color.red
+                                                : Color.gray
+                    )
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .keyboardType(.numberPad)
+            .textFieldStyle(.roundedBorder)
+            .onChange(of: state) {
+                Task {
+                    if state == "Accomplished" {
+                        goalService.updateCompletion(goal: goal, complete: true, gameID: matchID)
+                    } else if state == "Failed" {
+                        goalService.updateCompletion(goal: goal, complete: false, gameID: matchID)
+                    }
+                }
+            }
         }
     }
 }

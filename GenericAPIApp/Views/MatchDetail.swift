@@ -52,6 +52,8 @@ struct MatchDetail: View {
                     ProgressView()
                         .frame(width: 100, height: 100)
                 }
+                
+                GoalListMatchDetail(matchID: match.matchID)
             }
             .onAppear {
                 let urlString = "https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/\(match.champion).png"

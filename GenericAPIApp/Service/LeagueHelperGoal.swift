@@ -116,7 +116,8 @@ class LeagueHelperGoal: ObservableObject {
                 
                 if value >= threshold {
                     ref.updateData([
-                        "successes": FieldValue.arrayUnion([match.matchID])
+                        "successes": FieldValue.arrayUnion([match.matchID]),
+                        "fails": FieldValue.arrayRemove([match.matchID])
                     ]) { error in
                         if let error = error{
                             DispatchQueue.main.async {
@@ -130,7 +131,8 @@ class LeagueHelperGoal: ObservableObject {
                     }
                 } else {
                     ref.updateData([
-                        "fails": FieldValue.arrayUnion([match.matchID])
+                        "fails": FieldValue.arrayUnion([match.matchID]),
+                        "successes": FieldValue.arrayRemove([match.matchID])
                     ]) { error in
                         if let error = error{
                             DispatchQueue.main.async {
@@ -152,6 +154,7 @@ class LeagueHelperGoal: ObservableObject {
         if complete {
             goalRef.updateData([
                 "successes": FieldValue.arrayUnion([gameID])
+                
             ]) { error in
                 if let error = error{
                     DispatchQueue.main.async {
@@ -193,9 +196,9 @@ class LeagueHelperGoal: ObservableObject {
         }
         
         if successes.contains(matchID) {
-            return "Met"
+            return "Accomplished"
         } else if fails.contains(matchID) {
-            return "Unmet"
+            return "Failed"
         } else {
             return "Not Classified"
         }

@@ -19,8 +19,11 @@ struct Home: View {
     @State private var error: Error?
     @State private var fetching = false
     @State private var writing = false
+    
     @State private var changeAccount = false
     @State private var goToNotes = false
+    @State private var goToEnterRiotID = false
+    
     @State private var activeSheet: ActiveSheet?
     @State private var logoOpacity: Double = 0.0
     
@@ -50,9 +53,9 @@ struct Home: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 12) {
                 if auth.user == nil {
-                    Image("lol_logo") // Elias Segura: Logo Implementation
+                    Image("lol_logo")
                         .resizable()
                         .position(x: 75, y: 40)
                         .frame(width: 150, height: 80)
@@ -65,7 +68,7 @@ struct Home: View {
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
                     VStack {
-                        Image("lol_logo") // Elias Segura: Logo Implementation
+                        Image("lol_logo")
                             .resizable()
                             .position(x: 75, y: 40)
                             .frame(width: 150, height: 80)
@@ -75,14 +78,18 @@ struct Home: View {
                                     logoOpacity = 1
                                 }
                             }
-                        EnterRiotID(playerEmail: userEmail, goToNotes: $goToNotes)
-                        Spacer()
                         GoalList()
-                        Spacer()
                         MatchList()
                         NavigationLink(
                             destination: NoteView(goToNotes: $goToNotes),
                             isActive: $goToNotes
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+                        NavigationLink(
+                            destination: EnterRiotID(playerEmail: userEmail, goToEnterRiotID: $goToEnterRiotID),
+                            isActive: $goToEnterRiotID
                         ) {
                             EmptyView()
                         }
@@ -97,9 +104,13 @@ struct Home: View {
                         Button("New Goal") {
                             writing = true
                         }
+                        Button("View Notes") {
+                            goToNotes = true
+                        }
+                        Button("Enter RiotID") {
+                            goToEnterRiotID = true
+                        }
                     }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     if auth.user != nil {
                         Button("Sign Out") {
                             do {

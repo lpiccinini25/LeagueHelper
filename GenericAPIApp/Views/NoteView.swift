@@ -18,12 +18,7 @@ struct NoteView: View {
     var body: some View {
         NavigationView{
             ScrollView{
-                
                 NoteListFull()
-                
-                Button("Exit") {
-                    goToNotes = false
-                }
             }
         }
     }

@@ -130,7 +130,7 @@ struct StatusBadge: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            Text(completed ? "Reviewed!" : "Unreviewed!")
+            Text(completed ? "     Reviewed!" : "   Unreviewed!")
             
             Spacer()
             

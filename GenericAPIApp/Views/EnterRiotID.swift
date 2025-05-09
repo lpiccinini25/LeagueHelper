@@ -20,7 +20,7 @@ struct EnterRiotID: View {
     @State private var PUUID: String = ""
     @State private var notes: [String] = []
     
-    @Binding var goToNotes: Bool
+    @Binding var goToEnterRiotID: Bool
     
     private func updateRiotID () async {
         do {
@@ -33,26 +33,19 @@ struct EnterRiotID: View {
     
     
     var body: some View {
-        NavigationView {
-            TextField(
-                "Enter username#tagline (Example: llimeincoconut#0000)",
-                text: $riotID
-            )
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("View Notes") {
-                        goToNotes = true
+        TextField(
+            "Enter username#tagline (Example: llimeincoconut#0000)",
+            text: $riotID
+        )
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                Button("Submit") {
+                    Task {
+                        await updateRiotID()
                     }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Attach League Account") {
-                        Task {
-                            await updateRiotID()
-                        }
-                        reloadController.shouldReload.toggle()
-                    }
+                    goToEnterRiotID = false
+                    reloadController.shouldReload.toggle()
                 }
             }
         }

@@ -15,9 +15,6 @@ struct NoteEntry: View {
     @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var reloadController: ReloadController
-
-    @Binding var notes: [Note]
-    @Binding var writing: Bool
     
     var match: Match
     
@@ -49,20 +46,6 @@ struct NoteEntry: View {
         // wasn’t. More sophisticated code can look at the published `error` variable
         // in the article service and provide some feedback if that error becomes
         // non-nil.
-        notes.append(Note(
-            matchID: match.matchID,
-            id: noteId,
-            playerEmail: userEmail,
-            content: content,
-            assists: match.assists,
-            kills: match.kills,
-            deaths: match.deaths,
-            win: match.win,
-            role: match.role,
-            champion: match.champion
-        ))
-
-        writing = false
     }
 
     var body: some View {

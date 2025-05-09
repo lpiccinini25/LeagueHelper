@@ -31,7 +31,7 @@ struct NoteListMatchDetail: View {
         ScrollView {
             LazyVStack {
                     ForEach($notes, id: \.id) { $note in
-                        JustNoteRow(note: Note)
+                        JustNoteRow(note: note)
                     }
                 }
             }
@@ -39,8 +39,7 @@ struct NoteListMatchDetail: View {
                 fetching = true
                 do {
                     print("▶️ about to fetch for user:", userEmail)
-                    goals = try await noteService.fetchGoals(userEmail: userEmail)
-                    print("goals: \(goals)")
+                    notes = try await noteService.fetchNotesMatchID(userEmail: userEmail, matchID: matchID)
                     fetching = false
                 } catch {
                     self.error = error
@@ -50,7 +49,7 @@ struct NoteListMatchDetail: View {
             .onChange(of: reloadController.shouldReload) {
                 Task {
                     do {
-                        goals = try await goalService.fetchGoals(userEmail: userEmail)
+                        notes = try await noteService.fetchNotesMatchID(userEmail: userEmail, matchID: matchID)
                         fetching = false
                     } catch {
                         self.error = error

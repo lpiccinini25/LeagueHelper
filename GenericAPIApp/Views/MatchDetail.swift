@@ -54,6 +54,7 @@ struct MatchDetail: View {
                 }
                 
                 GoalListMatchDetail(matchID: match.matchID)
+                NoteEntry(match: match)
             }
             .onAppear {
                 let urlString = "https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/\(match.champion).png"

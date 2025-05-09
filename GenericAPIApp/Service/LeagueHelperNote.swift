@@ -11,7 +11,7 @@ import Firebase
 
 let notes = "notes"
 
-class LeagueHelperNotes: ObservableObject {
+class LeagueHelperNote: ObservableObject {
     private let db = Firestore.firestore()
     @State private var showingAlert = false
 
@@ -51,6 +51,45 @@ class LeagueHelperNotes: ObservableObject {
 
     func fetchNotes(userEmail: String) async throws -> [Note] {
         var articleQuery = db.collection(notes)
+            .whereField("playerEmail", isEqualTo: userEmail)
+            .order(by: "date", descending: true)
+            .limit(to: PAGE_LIMIT)
+
+        let querySnapshot = try await articleQuery.getDocuments()
+
+        return try querySnapshot.documents.map {
+            guard let content = $0.get("content") as? String,
+                  let playerEmail = $0.get("playerEmail") as? String,
+                  let matchID = $0.get("matchID") as? String,
+                  let kills = $0.get("kills") as? Int,
+                  let deaths = $0.get("deaths") as? Int,
+                  let win = $0.get("win") as? Bool,
+                  let assists = $0.get("assists") as? Int,
+                  let role = $0.get("role") as? String,
+                  let champion = $0.get("champion") as? String
+            else {
+                throw ArticleServiceError.mismatchedDocumentError
+            }
+
+            return Note(
+                matchID: matchID,
+                id: $0.documentID,
+                playerEmail: playerEmail,
+                content: content,
+                assists: assists,
+                kills: kills,
+                deaths: deaths,
+                win: win,
+                role: role,
+                champion: champion
+            )
+        }
+    }
+    
+    func fetchNotesMatchID(userEmail: String, matchID: String) async throws -> [Note] {
+        var articleQuery = db.collection(notes)
+            .whereField("playerEmail", isEqualTo: userEmail)
+            .whereField("matchID", isEqualTo: matchID)
             .order(by: "date", descending: true)
             .limit(to: PAGE_LIMIT)
 

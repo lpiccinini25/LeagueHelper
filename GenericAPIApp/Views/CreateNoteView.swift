@@ -12,7 +12,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct NoteEntry: View {
-    @EnvironmentObject var noteService: LeagueHelperNotes
+    @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var reloadController: ReloadController
 

@@ -34,26 +34,24 @@ struct EnterRiotID: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                TextField(
-                    "Enter username#tagline (Example: llimeincoconut#0000)",
-                    text: $riotID
-                )
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button("View Notes") {
-                            goToNotes = true
-                        }
+            TextField(
+                "Enter username#tagline (Example: llimeincoconut#0000)",
+                text: $riotID
+            )
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("View Notes") {
+                        goToNotes = true
                     }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Attach League Account") {
-                            Task {
-                                await updateRiotID()
-                            }
-                            reloadController.shouldReload.toggle()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Attach League Account") {
+                        Task {
+                            await updateRiotID()
                         }
+                        reloadController.shouldReload.toggle()
                     }
                 }
             }

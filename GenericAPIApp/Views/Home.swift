@@ -76,7 +76,9 @@ struct Home: View {
                                 }
                             }
                         EnterRiotID(playerEmail: userEmail, goToNotes: $goToNotes)
+                        Spacer()
                         GoalList()
+                        Spacer()
                         MatchList()
                         NavigationLink(
                             destination: NoteView(goToNotes: $goToNotes),

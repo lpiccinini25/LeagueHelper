@@ -31,6 +31,10 @@ struct MatchRow: View {
         auth.user?.email ?? "Unknown user"
     }
     
+    private var backgroundColor: Color {
+            match.win ? .pistachio : .roseMist
+        }
+    
     func checkIfGoalsCompleted(playerEmail: String, matchID: String) async throws -> Bool {
         let goals = try await goalService.fetchGoals(userEmail: playerEmail)
         var contains = true
@@ -45,9 +49,8 @@ struct MatchRow: View {
     }
     
     var body: some View {
-
         HStack(spacing: 8) {
-            VStack{
+            VStack {
                 HStack {
                     Text("Playing " + match.role + " as " + match.champion)
                         .font(.headline)
@@ -56,28 +59,21 @@ struct MatchRow: View {
                     
                     Spacer()
                     
-                    if !completed {
-                        HStack {
-                            Text("Unreviewed!")
-                            Image(systemName: "exclamationmark.circle.fill")
-                                .font(.system(size: 32, weight: .bold))
-                                .foregroundColor(.yellow)
-                        }
-                    } else {
-                        HStack{
-                            Text("Reviewed!")
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 32, weight: .bold))
-                                .foregroundColor(.green)
-                        }
-                    }
+                    StatusBadge(completed: completed)
                 }
                 
                 HStack {
-                    Text(String(match.id))
-                        .font(.headline)
-                        .foregroundColor(.blue)
-                    Spacer()
+                    if match.win {
+                        Text("Win")
+                            .font(.headline)
+                            .foregroundColor(.green)
+                        Spacer()
+                    } else {
+                        Text("Loss")
+                            .font(.headline)
+                            .foregroundColor(.red)
+                        Spacer()
+                    }
                 }
                 
                 HStack {
@@ -122,9 +118,27 @@ struct MatchRow: View {
             }
         }
         .padding()
-        .background(match.win == true ? Color(Color.pistachio) : Color(Color.roseMist))
+        .background(Color(backgroundColor))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)
+    }
+}
+
+struct StatusBadge: View {
+    let completed: Bool
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(completed ? "Reviewed!" : "Unreviewed!")
+            
+            Spacer()
+            
+            Image(systemName: completed
+                  ? "checkmark.circle.fill"
+                  : "exclamationmark.circle.fill")
+                .font(.system(size: 24, weight: .bold))
+                .foregroundColor(completed ? .green : .yellow)
+        }
     }
 }

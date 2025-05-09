@@ -75,6 +75,7 @@ func fetchChampionIcon(from urlString: String,
     }.resume()
 }
 
+
 // MARK: - ContentView
 struct MatchList: View {
     @EnvironmentObject var userService: LeagueHelperUserInfo
@@ -124,14 +125,6 @@ struct MatchList: View {
                     }
                 }
             }
-            .background( // Elias Segura: Background Graphics
-                LinearGradient(
-                    gradient: Gradient(colors: [.green.opacity(0.2),
-                                                .cyan.opacity(0.4)]),
-                    startPoint: .topTrailing,
-                    endPoint: .bottomTrailing
-                )
-            )
             .task {
                 // this runs once when the view appears
                 do {

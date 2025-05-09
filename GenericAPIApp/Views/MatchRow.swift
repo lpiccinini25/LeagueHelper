@@ -7,22 +7,70 @@
 
 import SwiftUI
 
+extension Color {
+    // Light Greens
+    static let mintLight    = Color(red: 223/255, green: 243/255, blue: 227/255) // #DFF3E3
+    static let sageLight    = Color(red: 200/255, green: 230/255, blue: 201/255) // #C8E6C9
+    static let pistachio    = Color(red: 232/255, green: 245/255, blue: 233/255) // #E8F5E9
+
+    // Light Reds / Pinks
+    static let blushLight   = Color(red: 255/255, green: 205/255, blue: 210/255) // #FFCDD2
+    static let coralLight   = Color(red: 239/255, green: 154/255, blue: 154/255) // #EF9A9A
+    static let roseMist     = Color(red: 255/255, green: 235/255, blue: 238/255) // #FFEBEE
+}
+
 struct MatchRow: View {
-    
+    @EnvironmentObject var goalService: LeagueHelperGoal
+    @EnvironmentObject var auth: LeagueHelperAuth
     var match: Match
     
     @State private var champIcon: UIImage? = nil
+    @State private var completed: Bool = false
+    
+    private var playerEmail: String {
+        auth.user?.email ?? "Unknown user"
+    }
+    
+    func checkIfGoalsCompleted(playerEmail: String, matchID: String) async throws -> Bool {
+        let goals = try await goalService.fetchGoals(userEmail: playerEmail)
+        var contains = true
+        for goal in goals {
+            if goal.successes.contains(matchID) || goal.fails.contains(matchID) {
+
+            } else {
+                contains = false
+            }
+        }
+        return contains
+    }
     
     var body: some View {
 
         HStack(spacing: 8) {
             VStack{
                 HStack {
-                    Text(match.role + " as " + match.champion)
+                    Text("Playing " + match.role + " as " + match.champion)
                         .font(.headline)
                         .foregroundColor(.black)
                         .bold()
+                    
                     Spacer()
+                    
+                    if !completed {
+                        HStack {
+                            Text("Unreviewed!")
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 32, weight: .bold))
+                                .foregroundColor(.yellow)
+                        }
+                    } else {
+                        HStack{
+                            Text("Reviewed!")
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 32, weight: .bold))
+                                .foregroundColor(.green)
+                        }
+                    }
                 }
                 
                 HStack {
@@ -66,8 +114,15 @@ struct MatchRow: View {
                 champIcon = image
             }
         }
+        .task {
+            do {
+                completed = try await checkIfGoalsCompleted(playerEmail: playerEmail, matchID: match.matchID)
+            } catch {
+                print("error")
+            }
+        }
         .padding()
-        .background(match.win == true ? Color(.green) : Color(.red))
+        .background(match.win == true ? Color(Color.pistachio) : Color(Color.roseMist))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)

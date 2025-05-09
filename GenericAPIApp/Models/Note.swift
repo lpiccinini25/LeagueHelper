@@ -11,6 +11,7 @@ import SwiftUI
 struct Note: Hashable, Codable, Identifiable {
     var matchID: String
     var id: String
+    var playerEmail: String
     var content: String
     var assists: Int
     var kills: Int

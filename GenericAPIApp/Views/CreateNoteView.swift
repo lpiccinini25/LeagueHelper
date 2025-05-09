@@ -14,6 +14,7 @@ import FirebaseAuth
 struct NoteEntry: View {
     @EnvironmentObject var noteService: LeagueHelperNotes
     @EnvironmentObject var auth: LeagueHelperAuth
+    @EnvironmentObject var reloadController: ReloadController
 
     @Binding var notes: [Note]
     @Binding var writing: Bool
@@ -72,6 +73,7 @@ struct NoteEntry: View {
                         .frame(minHeight: 256, maxHeight: .infinity)
                     Button("Submit") {
                         submitNote()
+                        reloadController.shouldReload.toggle()
                     }
                     .disabled(content.isEmpty)
                 }

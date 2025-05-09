@@ -20,6 +20,8 @@ struct EnterRiotID: View {
     @State private var PUUID: String = ""
     @State private var notes: [String] = []
     
+    @Binding var goToNotes: Bool
+    
     private func updateRiotID () async {
         do {
             try await userService.updateRiotId(playerEmail: playerEmail, riotID: riotID)
@@ -43,7 +45,8 @@ struct EnterRiotID: View {
                 
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") {
+                        Button("View Notes") {
+                            goToNotes = true
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {

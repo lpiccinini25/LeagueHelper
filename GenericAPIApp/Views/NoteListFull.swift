@@ -1,5 +1,5 @@
 //
-//  NoteListMatchDetail.swift
+//  NoteListFull.swift
 //  LeagueHelper
 //
 //  Created by Luca Piccinini on 5/8/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteListMatchDetail: View {
+struct NoteListFull: View {
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var reloadController: ReloadController
@@ -16,8 +16,6 @@ struct NoteListMatchDetail: View {
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
-    
-    let matchID: String
     
     private var userEmail: String {
         auth.user?.email ?? "Unknown user"
@@ -31,7 +29,7 @@ struct NoteListMatchDetail: View {
         ScrollView {
             LazyVStack {
                     ForEach(notes, id: \.id) { note in
-                        JustNoteRow(note: note)
+                        NoteRowFull(note: note)
                     }
                 }
             }
@@ -39,7 +37,7 @@ struct NoteListMatchDetail: View {
                 fetching = true
                 do {
                     print("▶️ about to fetch for user:", userEmail)
-                    notes = try await noteService.fetchNotesMatchID(userEmail: userEmail, matchID: matchID)
+                    notes = try await noteService.fetchNotes(userEmail: userEmail)
                     fetching = false
                 } catch {
                     self.error = error
@@ -49,7 +47,7 @@ struct NoteListMatchDetail: View {
             .onChange(of: reloadController.shouldReload) {
                 Task {
                     do {
-                        notes = try await noteService.fetchNotesMatchID(userEmail: userEmail, matchID: matchID)
+                        notes = try await noteService.fetchNotes(userEmail: userEmail)
                         fetching = false
                     } catch {
                         self.error = error

@@ -20,6 +20,7 @@ struct Home: View {
     @State private var fetching = false
     @State private var writing = false
     @State private var changeAccount = false
+    @State private var goToNotes = false
     @State private var activeSheet: ActiveSheet?
     
     
@@ -52,9 +53,16 @@ struct Home: View {
                 if auth.user == nil {
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
-                    EnterRiotID(playerEmail: userEmail)
+                    EnterRiotID(playerEmail: userEmail, goToNotes: $goToNotes)
                     GoalList()
                     MatchList()
+                    NavigationLink(
+                        destination: NoteView(goToNotes: $goToNotes),
+                              isActive: $goToNotes
+                            ) {
+                              EmptyView()
+                            }
+                            .hidden()
                 }
             }
             .navigationBarBackButtonHidden(true)

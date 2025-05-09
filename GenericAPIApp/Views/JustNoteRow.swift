@@ -28,6 +28,4 @@ struct JustNoteRow: View {
         .padding(.vertical, 4)
     
     }
-    
-    
 }

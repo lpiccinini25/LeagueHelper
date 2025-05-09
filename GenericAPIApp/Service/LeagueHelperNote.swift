@@ -34,6 +34,7 @@ class LeagueHelperNote: ObservableObject {
         ref = db.collection(notes).addDocument(data: [
             "content": note.content,
             "matchID": note.matchID,
+            "playerEmail": note.playerEmail,
             "kills": note.kills,
             "assists": note.assists,
             "deaths": note.deaths,
@@ -52,7 +53,6 @@ class LeagueHelperNote: ObservableObject {
     func fetchNotes(userEmail: String) async throws -> [Note] {
         var articleQuery = db.collection(notes)
             .whereField("playerEmail", isEqualTo: userEmail)
-            .order(by: "date", descending: true)
             .limit(to: PAGE_LIMIT)
 
         let querySnapshot = try await articleQuery.getDocuments()
@@ -90,7 +90,6 @@ class LeagueHelperNote: ObservableObject {
         var articleQuery = db.collection(notes)
             .whereField("playerEmail", isEqualTo: userEmail)
             .whereField("matchID", isEqualTo: matchID)
-            .order(by: "date", descending: true)
             .limit(to: PAGE_LIMIT)
 
         let querySnapshot = try await articleQuery.getDocuments()

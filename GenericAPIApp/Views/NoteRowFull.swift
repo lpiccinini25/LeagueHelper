@@ -1,21 +1,21 @@
 //
-//  MatchRow.swift
-//  GenericAPIApp
+//  Untitled.swift
+//  LeagueHelper
 //
-//  Created by Luca Piccinini on 3/9/25.
+//  Created by Luca Piccinini on 5/8/25.
 //
 
 import SwiftUI
 
-struct MatchRow: View {
+struct NoteRowFull: View {
     
-    var match: Match
+    var note: Note
     
     var body: some View {
 
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(match.role + " as " + match.champion)
+                Text(note.role + " as " + note.champion)
                     .font(.headline)
                     .foregroundColor(.black)
                     .bold()
@@ -23,7 +23,7 @@ struct MatchRow: View {
             }
             
             HStack {
-                Text(String(match.id))
+                Text(String(note.id))
                     .font(.headline)
                     .foregroundColor(.blue)
                 Spacer()
@@ -32,27 +32,29 @@ struct MatchRow: View {
             HStack {
                 Label("Assists", systemImage: "hands.sparkles")
                 Spacer()
-                Text(String(match.assists))
+                Text(String(note.assists))
                     .bold()
             }
             
             HStack {
                 Label("Kills", systemImage: "crosshairs")
                 Spacer()
-                Text(String(match.kills))
+                Text(String(note.kills))
                     .bold()
             }
             
             HStack {
                 Label("Deaths", systemImage: "skull")
                 Spacer()
-                Text(String(match.deaths))
+                Text(String(note.deaths))
                     .bold()
             }
             
+            JustNoteRow(note: note)
+            
         }
         .padding()
-        .background(match.win == true ? Color(.green) : Color(.red))
+        .background(note.win == true ? Color(.green) : Color(.red))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)

@@ -15,44 +15,48 @@ struct MatchRow: View {
     
     var body: some View {
 
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(match.role + " as " + match.champion)
-                    .font(.headline)
-                    .foregroundColor(.black)
-                    .bold()
-                Spacer()
-            }
-            
-            HStack {
-                Text(String(match.id))
-                    .font(.headline)
-                    .foregroundColor(.blue)
-                Spacer()
-            }
-            
-            HStack {
-                Label("Assists", systemImage: "hands.sparkles")
-                Spacer()
-                Text(String(match.assists))
-                    .bold()
-                if let champIcon = champIcon {
-                    CircleImage(Icon: champIcon)
+        HStack(spacing: 8) {
+            VStack{
+                HStack {
+                    Text(match.role + " as " + match.champion)
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .bold()
+                    Spacer()
+                }
+                
+                HStack {
+                    Text(String(match.id))
+                        .font(.headline)
+                        .foregroundColor(.blue)
+                    Spacer()
+                }
+                
+                HStack {
+                    Label("Assists", systemImage: "hands.sparkles")
+                    Spacer()
+                    Text(String(match.assists))
+                        .bold()
+                }
+                
+                HStack {
+                    Label("Kills", systemImage: "crosshairs")
+                    Spacer()
+                    Text(String(match.kills))
+                        .bold()
+                }
+                
+                HStack {
+                    Label("Deaths", systemImage: "skull")
+                    Spacer()
+                    Text(String(match.deaths))
+                        .bold()
                 }
             }
-            
-            HStack {
-                Label("Kills", systemImage: "crosshairs")
-                Spacer()
-                Text(String(match.kills))
-                    .bold()
-            }
-            
-            HStack {
-                Label("Deaths", systemImage: "skull")
-                Spacer()
-                Text(String(match.deaths))
-                    .bold()
+            VStack {
+                if let champIcon = champIcon {
+                    CircleImage(Icon: champIcon, width: 100, height: 100)
+                }
             }
             
         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - API Key
-let apiKey = "RGAPI-9945bfe5-d64e-4da7-94df-93bc83d71e71"
+let apiKey = "RGAPI-37057a3d-109c-45f0-b0fd-1cbaf8e4654a"
 
 // MARK: - Match Info
 
@@ -55,6 +55,26 @@ func fetchMATCHINFO(matchID: String) async throws -> BaseDict {
     return GameINFO
 }
 
+func fetchChampionIcon(from urlString: String,
+                      completion: @escaping (UIImage?) -> Void) {
+    guard let url = URL(string: urlString) else {
+        completion(nil)
+        return
+    }
+    URLSession.shared.dataTask(with: url) { data, _, error in
+        guard let data = data,
+              let image = UIImage(data: data),
+              error == nil
+        else {
+            completion(nil)
+            return
+        }
+        DispatchQueue.main.async {
+            completion(image)
+        }
+    }.resume()
+}
+
 // MARK: - ContentView
 struct MatchList: View {
     @EnvironmentObject var userService: LeagueHelperUserInfo
@@ -69,6 +89,7 @@ struct MatchList: View {
     @State private var MatchIDs: [String] = []
     @State private var MatchList: [Match] = []
     @State private var showAlert: Bool = false
+    @State private var champIcon: UIImage? = nil
     @State private var logoOpacity: Double = 0.0
     @State private var userInfo = UserInfo(
       playerEmail: "",

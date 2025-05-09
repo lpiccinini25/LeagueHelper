@@ -78,8 +78,9 @@ struct GoalRowHome: View {
                   .foregroundColor(.red)
             }
         }
-        .padding()
-        .background(Color(.lightGray))
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(Color(.systemGray4))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)

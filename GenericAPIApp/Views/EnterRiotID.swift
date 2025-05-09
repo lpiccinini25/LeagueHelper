@@ -40,8 +40,6 @@ struct EnterRiotID: View {
                     text: $riotID
                 )
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .position(x: 200, y: 10)
-                .frame(width: 403, height: 28)
                 
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -50,7 +48,7 @@ struct EnterRiotID: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Submit") {
+                        Button("Attach League Account") {
                             Task {
                                 await updateRiotID()
                             }

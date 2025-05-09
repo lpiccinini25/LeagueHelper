@@ -11,6 +11,8 @@ struct MatchRow: View {
     
     var match: Match
     
+    @State private var champIcon: UIImage? = nil
+    
     var body: some View {
 
         VStack(alignment: .leading, spacing: 8) {
@@ -34,6 +36,9 @@ struct MatchRow: View {
                 Spacer()
                 Text(String(match.assists))
                     .bold()
+                if let champIcon = champIcon {
+                    CircleImage(Icon: champIcon)
+                }
             }
             
             HStack {
@@ -50,6 +55,12 @@ struct MatchRow: View {
                     .bold()
             }
             
+        }
+        .onAppear {
+            let urlString = "https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/\(match.champion).png"
+            fetchChampionIcon(from: urlString) { image in
+                champIcon = image
+            }
         }
         .padding()
         .background(match.win == true ? Color(.green) : Color(.red))

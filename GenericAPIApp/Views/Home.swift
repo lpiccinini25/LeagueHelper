@@ -22,6 +22,7 @@ struct Home: View {
     @State private var changeAccount = false
     @State private var goToNotes = false
     @State private var activeSheet: ActiveSheet?
+    @State private var logoOpacity: Double = 0.0
     
     
     private var userEmail: String {
@@ -51,18 +52,40 @@ struct Home: View {
         NavigationView {
             VStack {
                 if auth.user == nil {
+                    Image("lol_logo") // Elias Segura: Logo Implementation
+                        .resizable()
+                        .position(x: 75, y: 40)
+                        .frame(width: 150, height: 80)
+                        .opacity(logoOpacity)
+                        .onAppear {
+                            withAnimation(.easeIn(duration: 2)){
+                                logoOpacity = 1
+                            }
+                        }
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
-                    EnterRiotID(playerEmail: userEmail, goToNotes: $goToNotes)
-                    GoalList()
-                    MatchList()
-                    NavigationLink(
-                        destination: NoteView(goToNotes: $goToNotes),
-                              isActive: $goToNotes
-                            ) {
-                              EmptyView()
+                    VStack {
+                        Image("lol_logo") // Elias Segura: Logo Implementation
+                            .resizable()
+                            .position(x: 75, y: 40)
+                            .frame(width: 150, height: 80)
+                            .opacity(logoOpacity)
+                            .onAppear {
+                                withAnimation(.easeIn(duration: 2)){
+                                    logoOpacity = 1
+                                }
                             }
-                            .hidden()
+                        EnterRiotID(playerEmail: userEmail, goToNotes: $goToNotes)
+                        GoalList()
+                        MatchList()
+                        NavigationLink(
+                            destination: NoteView(goToNotes: $goToNotes),
+                            isActive: $goToNotes
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+                    }
                 }
             }
             .navigationBarBackButtonHidden(true)

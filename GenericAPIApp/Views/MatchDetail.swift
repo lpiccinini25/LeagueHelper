@@ -30,6 +30,7 @@ func fetchChampionIcon(from urlString: String,
 
 struct MatchDetail: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
+    @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var auth: LeagueHelperAuth
     
     @State private var champIcon: UIImage? = nil
@@ -55,6 +56,7 @@ struct MatchDetail: View {
                 
                 GoalListMatchDetail(matchID: match.matchID)
                 NoteEntry(match: match)
+                NoteListMatchDetail(matchID: match.matchID)
             }
             .onAppear {
                 let urlString = "https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/\(match.champion).png"

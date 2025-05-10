@@ -105,8 +105,8 @@ class LeagueHelperGoal: ObservableObject {
                     value = match.kills
                 case "assists":
                     value = match.assists
-                case "deaths":
-                    value = match.deaths
+                case "creep score":
+                    value = match.totalMinionsKilled
                 default:
                     continue    // unknown field → skip
                 }

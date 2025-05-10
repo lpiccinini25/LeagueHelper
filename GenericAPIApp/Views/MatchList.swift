@@ -32,7 +32,7 @@ struct Participant: Codable {
     let win: Bool
     let championName: String
     let baronKills: Int
-    
+    let totalMinionsKilled: Int
 }
 
 func fetchMATCHES(puuid: String) async throws ->
@@ -208,8 +208,9 @@ struct MatchList: View {
                 let deaths = playerStats.deaths
                 let win = playerStats.win
                 let champion = playerStats.championName
+                let creepscore = playerStats.totalMinionsKilled
                 
-                let ThisMatch = Match(matchID: matchID, id: index, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion)
+                let ThisMatch = Match(matchID: matchID, id: index, assists: assists, kills: kills, deaths: deaths, win: win, role: role, champion: champion, totalMinionsKilled: creepscore)
                 await MainActor.run {
                     MatchList.append(ThisMatch)
                     reloadController.shouldReload.toggle()

@@ -17,4 +17,5 @@ struct Match: Hashable, Codable, Identifiable {
     var win: Bool
     var role: String
     var champion: String
+    var totalMinionsKilled: Int
 }

@@ -1,34 +1,23 @@
-Authors Elias Segura and Luca Piccinini
+Authors Luca Piccinini
 
-About the App
+Welcome to LeagueHelper! The app that helps you structure and track your improvement on self-assigned goals!
 
-Overview
+Roles: This app was entirely done by me, so I filled all roles, from API, to database, to conceptual and style.
 
-Welcome to our League of Legends match statistics app! This app is designed for players by providing detailed insights into their gameplay. By leveraging Riot Games' official API, we allow players to easily access their match stats from the past 30 games, helping analyze performance and check stats.
+Audience: The audience of this app is experienced League of Legends players. This app does not provide any game tips outside of 
+what can be derived from simple statistics. Instead, this app is designed to help people who already know what they need to improve
+on structure and track their improvement. 
 
-Key Features
+App Screenshots From Presentation:
+![image](https://github.com/user-attachments/assets/3219f8ac-6b82-425a-8947-5fbb9b6ad06d)
 
-- Match History Analysis: View detailed statistics for the last 30 games, including kills, deaths, assists, damage dealt, and more.
+Technology Highlights:
+This app using firebase firestore and firebaseUI in order to save and access user information, user goals, and user notes, and authentication.
+This app uses the Riot API in order to fetch information about the games the user players.
+This app also uses ddragon in order to fetch champion images.
 
-- Player Insights: Get a breakdown of performance metrics for specific champions and roles.
-
-- Seamless Integration: The app uses Riot Games' official API to ensure data accuracy and reliability.
-
-- Design: The main page features a animation where the app’s logo fades gracefully into view.
-
-How It Works
-
-- Login with Summoner Name: Enter your summoner name to pull data directly from Riot Games' servers.
-
-- Fetch Match Data: The app retrieves your match history and processes key statistics.
-
-- Visualize Your Stats: Explore your performance trends and detailed breakdowns in an easy-to-navigate interface.
-
-Note:
-- A example player you could use to search up stats is:
-    - Llimeincoconut#0000
-
-Sources:
-
-Riot Games: https://developer.riotgames.com/apis#match-v5/GET_getMatch
-
+Credits:
+League of legens Icon - https://icon-library.com/icon/download-league-of-legends-icon-24.html
+Used lots of code from BareBonesBlog Project - thanks Daniel Barry for help on that project
+Used lots of code from GenericAPI Project - thanks Elias Segura for help on that project
+Ddragon for champion icon images

@@ -78,7 +78,7 @@ struct Home: View {
                                     logoOpacity = 1
                                 }
                             }
-                        GoalList()
+                        GoalListHome()
                         MatchList()
                         NavigationLink(
                             destination: NoteView(goToNotes: $goToNotes),

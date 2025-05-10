@@ -99,6 +99,7 @@ struct MatchList: View {
       notes:      []
     )
     @State private var goals: [Goal] = []
+    @State private var progress: String = "Fetching Matches..."
     
     private var playerEmail: String {
         auth.user?.email ?? "Unknown user"
@@ -116,6 +117,7 @@ struct MatchList: View {
     var body: some View {
             VStack {
                 ScrollView {
+                    Text(progress)
                     ForEach(MatchList) { game in
                         NavigationLink {
                             MatchDetail(match: game)
@@ -132,6 +134,7 @@ struct MatchList: View {
                     await fetchMatches()
                     await fetchMatchInfo(matches: MatchIDs)
                     try await goalService.updateGoalsQuantitative(userEmail: playerEmail, MatchList: MatchList)
+                    
                 } catch {
                     print("Failed to fetch UserInfo:", error)
                 }
@@ -210,5 +213,6 @@ struct MatchList: View {
                 print("Failed to fetch \(matchID): \(error)")
             }
         }
+        progress = "All Matches Fetched!"
     }
 }

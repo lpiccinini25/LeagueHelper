@@ -7,12 +7,19 @@
 
 import SwiftUI
 
-struct GoalList: View {
+struct GoalListHome: View {
     @EnvironmentObject var auth: LeagueHelperAuth
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var reloadController: ReloadController
-    
+    @EnvironmentObject var userService: LeagueHelperUserInfo
+
     @State var goals: [Goal] = []
+    @State var userInfo: UserInfo = UserInfo(
+        playerEmail: "",
+        riotID: "",
+        PUUID: "",
+        notes: []
+    )
     @State var error: Error?
     @State var fetching = false
     @State var writing = false
@@ -28,6 +35,7 @@ struct GoalList: View {
     var body: some View {
         ScrollView {
             LazyVStack {
+                Text("Welcome " + userInfo.riotID)
                 Text("🔢 Goals count: \(goals.count)")
                     ForEach($goals, id: \.id) { $goal in
                         GoalRowHome(goal: goal)
@@ -53,6 +61,7 @@ struct GoalList: View {
                 Task {
                     do {
                         goals = try await goalService.fetchGoals(userEmail: userEmail)
+                        userInfo = try await userService.fetchUserInfo(userEmail: userEmail)
                         fetching = false
                     } catch {
                         self.error = error

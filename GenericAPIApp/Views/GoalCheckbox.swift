@@ -34,7 +34,6 @@ struct GoalCheckbox: View {
                 } label: {
                     Label(state, systemImage: "chevron.down")
                         .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .background(
                             state == "Accomplished" ? Color.green
                           : state == "Failed"       ? Color.red
@@ -57,7 +56,6 @@ struct GoalCheckbox: View {
                 } label: {
                     Label(state, systemImage: "chevron.down")
                         .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .background(
                             state == "Accomplished" ? Color.green
                           : state == "Failed"       ? Color.red

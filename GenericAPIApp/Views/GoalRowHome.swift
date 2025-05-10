@@ -38,7 +38,7 @@ struct GoalRowHome: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 if goal.quantitative {
-                    Text("\(goal.title) \(String(goal.quantity))")
+                    Text("Achieved \(String(goal.quantity)) " + goal.title)
                         .font(.headline)
                         .foregroundColor(.black)
                         .bold()

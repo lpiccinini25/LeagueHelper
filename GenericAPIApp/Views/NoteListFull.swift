@@ -25,11 +25,14 @@ struct NoteListFull: View {
         print(goal.title)
     }
     
+    
     var body: some View {
+        let grouped: [String: [Note]] = Dictionary(grouping: notes, by: \.matchID)
+        let groupedNotes: [[Note]] = Array(grouped.values)
         ScrollView {
             LazyVStack {
-                    ForEach(notes, id: \.id) { note in
-                        NoteRowFull(note: note)
+                ForEach(groupedNotes, id: \.self) { group in
+                    NoteRowFull(notes: group)
                     }
                 }
             }

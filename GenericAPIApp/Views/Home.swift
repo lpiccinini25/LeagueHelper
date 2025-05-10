@@ -21,16 +21,8 @@ struct Home: View {
     @State private var fetching = false
     @State private var writing = false
     
-    @State private var match: Match = Match(
-        matchID: "",
-        id: 0,
-        assists: 0,
-        kills: 0,
-        deaths: 0,
-        win: false,
-        role: "",
-        champion: ""
-    )
+    @State private var selectedMatch: Match? = nil
+    
     @State private var viewMatchDetail: Bool = false
     
     @State private var changeAccount = false
@@ -67,6 +59,7 @@ struct Home: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 12) {
+                Spacer()
                 if auth.user == nil {
                     Image("lol_logo")
                         .resizable()
@@ -78,6 +71,7 @@ struct Home: View {
                                 logoOpacity = 1
                             }
                         }
+                    Spacer()
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
                     VStack {
@@ -92,7 +86,10 @@ struct Home: View {
                                 }
                             }
                         GoalListHome()
-                        MatchList(match: $match, viewMatchDetail: $viewMatchDetail)
+                        MatchList { selected in
+                            selectedMatch = selected
+                            viewMatchDetail = true
+                        }
                         NavigationLink(
                             destination: NoteView(goToNotes: $goToNotes),
                             isActive: $goToNotes
@@ -146,10 +143,20 @@ struct Home: View {
                             requestLogin = true
                         }
                     }
-                }
+                } 
             }
-            .sheet(isPresented: $viewMatchDetail) {
-                MatchDetail(viewMatchDetail: $viewMatchDetail, match: match)
+            .sheet(item: $selectedMatch) { match in
+                NavigationView {
+                    MatchDetail(goals: goals, match: match)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Exit") {
+                                    // dismisses the sheet
+                                    selectedMatch = nil
+                                }
+                            }
+                        }
+                }
             }
         }
         .onChange(of: auth.user) {
@@ -157,6 +164,13 @@ struct Home: View {
           Task {
             try await tryCreateUser()
           }
+        }
+        .task {
+            do {
+                goals = try await goalService.fetchGoals(userEmail: userEmail)
+            } catch {
+                print("failed to fetch goals: HOME")
+            }
         }
     }
 }

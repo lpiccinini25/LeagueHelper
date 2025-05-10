@@ -15,6 +15,7 @@ struct NoteView: View {
     @Binding var goToNotes: Bool
     
     
+    
     var body: some View {
         NavigationView{
             ScrollView{

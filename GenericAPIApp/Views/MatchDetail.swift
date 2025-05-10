@@ -13,11 +13,9 @@ struct MatchDetail: View {
     @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var auth: LeagueHelperAuth
     
-    @Binding var viewMatchDetail: Bool
-    
     @State private var champIcon: UIImage? = nil
     @State var fetching = false
-    @State var goals: [Goal] = []
+    @State var goals: [Goal]
     @State var match: Match
     
     private var playerEmail: String {
@@ -48,7 +46,9 @@ struct MatchDetail: View {
             .onAppear {
                 let urlString = "https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/\(match.champion).png"
                 fetchChampionIcon(from: urlString) { image in
-                    champIcon = image
+                  DispatchQueue.main.async {
+                    self.champIcon = image
+                  }
                 }
             }
             .padding()

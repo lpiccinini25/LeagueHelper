@@ -81,7 +81,8 @@ struct GoalEntry: View {
 
             Menu {
                 Button("kills") { title = "kills" }
-                Button("Deaths Per Game") { title = "Deaths Per Game" }
+                Button("assists") { title = "assits" }
+                Button("")
             } label: {
                 Label(title.isEmpty ? "Choose a Goal" : title, systemImage: "chevron.down")
                     .padding()

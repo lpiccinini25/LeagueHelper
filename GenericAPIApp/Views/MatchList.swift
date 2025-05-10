@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - API Key
-let apiKey = "RGAPI-37057a3d-109c-45f0-b0fd-1cbaf8e4654a"
+let apiKey = "RGAPI-91b76c55-f60c-4c0f-b771-a452a7f6934e"
 
 // MARK: - Match Info
 
@@ -32,6 +32,7 @@ struct Participant: Codable {
     let win: Bool
     let championName: String
     let baronKills: Int
+    
 }
 
 func fetchMATCHES(puuid: String) async throws ->
@@ -83,9 +84,6 @@ struct MatchList: View {
     @EnvironmentObject var reloadController: ReloadController
     @EnvironmentObject var goalService: LeagueHelperGoal
     
-    @Binding var match: Match
-    @Binding var viewMatchDetail: Bool
-    
     @State private var puuid: String = "Fetching..."
     @State private var usernametagline: String = ""
     @State private var username: String = ""
@@ -117,14 +115,16 @@ struct MatchList: View {
         }
     }
     
+    //for when you click matchdetail
+    let onSelect: (Match) -> Void
+    
     var body: some View {
             VStack {
                 ScrollView {
                     Text(progress)
                     ForEach(MatchList) { game in
                         Button {
-                            match = game
-                            viewMatchDetail = true
+                            onSelect(game)
                         } label: {
                             MatchRow(match: game)
                         }

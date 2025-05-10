@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-extension Color {
-    // Light Greens
-    static let mintLight    = Color(red: 223/255, green: 243/255, blue: 227/255) // #DFF3E3
-    static let sageLight    = Color(red: 200/255, green: 230/255, blue: 201/255) // #C8E6C9
-    static let pistachio    = Color(red: 232/255, green: 245/255, blue: 233/255) // #E8F5E9
-
-    // Light Reds / Pinks
-    static let blushLight   = Color(red: 255/255, green: 205/255, blue: 210/255) // #FFCDD2
-    static let coralLight   = Color(red: 239/255, green: 154/255, blue: 154/255) // #EF9A9A
-    static let roseMist     = Color(red: 255/255, green: 235/255, blue: 238/255) // #FFEBEE
-}
 
 struct MatchRow: View {
     @EnvironmentObject var goalService: LeagueHelperGoal

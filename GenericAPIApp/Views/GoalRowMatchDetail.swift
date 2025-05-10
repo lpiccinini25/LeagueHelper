@@ -40,7 +40,9 @@ struct GoalRowMatchDetail: View {
                         .bold()
                     Spacer()
                 }
+                Spacer()
                 GoalCheckbox(goal:goal, matchID: match.matchID)
+                Spacer()
             }
         }
         .padding()

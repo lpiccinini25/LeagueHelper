@@ -83,6 +83,9 @@ struct MatchList: View {
     @EnvironmentObject var reloadController: ReloadController
     @EnvironmentObject var goalService: LeagueHelperGoal
     
+    @Binding var match: Match
+    @Binding var viewMatchDetail: Bool
+    
     @State private var puuid: String = "Fetching..."
     @State private var usernametagline: String = ""
     @State private var username: String = ""
@@ -119,8 +122,9 @@ struct MatchList: View {
                 ScrollView {
                     Text(progress)
                     ForEach(MatchList) { game in
-                        NavigationLink {
-                            MatchDetail(match: game)
+                        Button {
+                            match = game
+                            viewMatchDetail = true
                         } label: {
                             MatchRow(match: game)
                         }

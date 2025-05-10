@@ -17,6 +17,8 @@ struct GoalRowHome: View {
     @State var writing = false
     @State private var showingDeleteAlert = false
     @State private var deletionResult = ""
+    private var textColor: Color {
+        goal.fails.count > goal.successes.count ? .red : .green}
     
     private var userEmail: String {
         auth.user?.email ?? "Unknown user"
@@ -77,13 +79,16 @@ struct GoalRowHome: View {
                 + Text("\(goal.fails.count)")
                   .foregroundColor(.red)
                 
-                if goal.fails.count < goal.successes.count {
-                    Text("\(String(Int(100*(goal.successes.count/(goal.fails.count+goal.successes.count)))))% success rate")
-                        .foregroundColor(.red)
-                } else {
-                    Text("\(String(Int(100*(goal.successes.count/(goal.fails.count+goal.successes.count)))))% success rate")
-                        .foregroundColor(.green)
-                }
+                let successes = goal.successes.count
+                let failures  = goal.fails.count
+                let total     = successes + failures
+
+                let rate: Double = total > 0
+                    ? Double(successes) / Double(total)
+                    : 0
+
+                Text("\(Int(rate * 100))% success rate")
+                    .foregroundColor(textColor)
             }
         }
         .padding(.horizontal, 8)

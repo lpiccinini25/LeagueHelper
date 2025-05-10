@@ -13,19 +13,17 @@ struct MatchDetail: View {
     @EnvironmentObject var noteService: LeagueHelperNote
     @EnvironmentObject var auth: LeagueHelperAuth
     
+    @Binding var viewMatchDetail: Bool
+    
     @State private var champIcon: UIImage? = nil
     @State var fetching = false
     @State var goals: [Goal] = []
-    var match: Match
+    @State var match: Match
     
     private var playerEmail: String {
         auth.user?.email ?? "Unknown user"
     }
-    
-    init(match: Match, champIcon: UIImage? = nil) {
-      self.match = match
-      self.champIcon = champIcon
-    }
+
     
     private var backgroundColor: Color {
             match.win ? .pistachio : .roseMist

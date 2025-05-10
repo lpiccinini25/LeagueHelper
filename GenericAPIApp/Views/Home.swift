@@ -12,6 +12,7 @@ struct Home: View {
     @EnvironmentObject var goalService: LeagueHelperGoal
     @EnvironmentObject var reloadController: ReloadController
     @EnvironmentObject var userService: LeagueHelperUserInfo
+    @EnvironmentObject var noteService: LeagueHelperNote
     
     @Binding var requestLogin: Bool
     
@@ -19,6 +20,18 @@ struct Home: View {
     @State private var error: Error?
     @State private var fetching = false
     @State private var writing = false
+    
+    @State private var match: Match = Match(
+        matchID: "",
+        id: 0,
+        assists: 0,
+        kills: 0,
+        deaths: 0,
+        win: false,
+        role: "",
+        champion: ""
+    )
+    @State private var viewMatchDetail: Bool = false
     
     @State private var changeAccount = false
     @State private var goToNotes = false
@@ -79,7 +92,7 @@ struct Home: View {
                                 }
                             }
                         GoalListHome()
-                        MatchList()
+                        MatchList(match: $match, viewMatchDetail: $viewMatchDetail)
                         NavigationLink(
                             destination: NoteView(goToNotes: $goToNotes),
                             isActive: $goToNotes
@@ -94,6 +107,14 @@ struct Home: View {
                             EmptyView()
                         }
                         .hidden()
+                        NavigationLink(
+                            destination: GoalEntry(goals: $goals, writing: $writing),
+                            isActive: $writing
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+
                     }
                 }
             }
@@ -127,15 +148,15 @@ struct Home: View {
                     }
                 }
             }
+            .sheet(isPresented: $viewMatchDetail) {
+                MatchDetail(viewMatchDetail: $viewMatchDetail, match: match)
+            }
         }
         .onChange(of: auth.user) {
             guard auth.user != nil else { return }
           Task {
             try await tryCreateUser()
           }
-        }
-        .sheet(isPresented: $writing) {
-            GoalEntry(goals: $goals, writing: $writing)
         }
     }
 }

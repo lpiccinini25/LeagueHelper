@@ -26,6 +26,10 @@ struct MatchDetail: View {
       self.match = match
       self.champIcon = champIcon
     }
+    
+    private var backgroundColor: Color {
+            match.win ? .pistachio : .roseMist
+        }
 
     var body: some View {
         
@@ -39,7 +43,7 @@ struct MatchDetail: View {
                         .frame(width: 100, height: 100)
                 }
                 
-                GoalListMatchDetail(matchID: match.matchID)
+                GoalListMatchDetail(match: match)
                 NoteEntry(match: match)
                 NoteListMatchDetail(matchID: match.matchID)
             }
@@ -51,6 +55,7 @@ struct MatchDetail: View {
             }
             .padding()
         }
+        .background(Color(backgroundColor))
     }
 }
 

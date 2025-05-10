@@ -23,29 +23,28 @@ struct GoalRowMatchDetail: View {
     }
     
     var goal: Goal
-    var matchID: String
+    var match: Match
+    
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 if goal.quantitative {
-                    Text("\(goal.title) \(String(goal.quantity))")
-                        .font(.headline)
+                    Text("Achieved \(String(goal.quantity)) \(goal.title) ")
                         .foregroundColor(.black)
                         .bold()
                     Spacer()
                 } else {
                     Text("\(goal.title)")
-                        .font(.headline)
                         .foregroundColor(.black)
                         .bold()
                     Spacer()
                 }
-                GoalCheckbox(goal:goal, matchID: matchID)
+                GoalCheckbox(goal:goal, matchID: match.matchID)
             }
         }
         .padding()
-        .background(Color(.lightGray))
+        .background(Color(.white))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.vertical, 4)

@@ -76,6 +76,14 @@ struct GoalRowHome: View {
                 + Text(" vs ")
                 + Text("\(goal.fails.count)")
                   .foregroundColor(.red)
+                
+                if goal.fails.count < goal.successes.count {
+                    Text("\(String(Int(100*(goal.successes.count/(goal.fails.count+goal.successes.count)))))% success rate")
+                        .foregroundColor(.red)
+                } else {
+                    Text("\(String(Int(100*(goal.successes.count/(goal.fails.count+goal.successes.count)))))% success rate")
+                        .foregroundColor(.green)
+                }
             }
         }
         .padding(.horizontal, 8)

@@ -166,6 +166,7 @@ struct MatchList: View {
     private func fetchMatchInfo(matches: [String]) async {
         let delayNS: UInt64 = 1_200_000_000  // 1.2s in nanoseconds
         MatchList = []
+        progress = "Fetching Matches..."
         
         for (index, matchID) in matches.enumerated() {
             // after the very first request, pause to respect rate limit

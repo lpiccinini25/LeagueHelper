@@ -24,7 +24,7 @@ struct GoalListMatchDetail: View {
     @State var fetching = false
     @State var writing = false
     
-    let matchID: String
+    let match: Match
     
     private var userEmail: String {
         auth.user?.email ?? "Unknown user"
@@ -39,7 +39,7 @@ struct GoalListMatchDetail: View {
             LazyVStack {
                 Text("🔢 Goals count: \(goals.count)")
                     ForEach($goals, id: \.id) { $goal in
-                        GoalRowMatchDetail(goal: goal, matchID: matchID)
+                        GoalRowMatchDetail(goal: goal, match: match)
                             .onAppear {
                                 printGoal(goal:goal)
                             }

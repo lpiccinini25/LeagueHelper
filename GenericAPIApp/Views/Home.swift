@@ -59,7 +59,6 @@ struct Home: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 12) {
-                Spacer()
                 if auth.user == nil {
                     Image("lol_logo")
                         .resizable()
@@ -71,7 +70,6 @@ struct Home: View {
                                 logoOpacity = 1
                             }
                         }
-                    Spacer()
                     Text("Welcome To LeagueHelper! Please Sign In To Get Started")
                 } else {
                     VStack {

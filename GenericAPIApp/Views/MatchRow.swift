@@ -66,28 +66,28 @@ struct MatchRow: View {
                 }
                 
                 HStack {
-                    Label("Assists")
+                    Text("Assists")
                     Spacer()
                     Text(String(match.assists))
                         .bold()
                 }
                 
                 HStack {
-                    Label("Kills")
+                    Text("Kills")
                     Spacer()
                     Text(String(match.kills))
                         .bold()
                 }
                 
                 HStack {
-                    Label("CS")
+                    Text("CS")
                     Spacer()
                     Text(String(match.totalMinionsKilled))
                         .bold()
                 }
                 
                 HStack {
-                    Label("Deaths")
+                    Text("Deaths")
                     Spacer()
                     Text(String(match.deaths))
                         .bold()

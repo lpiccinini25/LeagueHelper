@@ -32,7 +32,7 @@ struct GoalCheckbox: View {
             if goal.quantitative {
                 Button() {
                 } label: {
-                    Label(state, systemImage: "chevron.down")
+                    Text(state)
                         .padding()
                         .background(
                             state == "Accomplished" ? Color.green

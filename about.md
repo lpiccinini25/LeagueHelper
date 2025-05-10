@@ -21,3 +21,4 @@ League of legens Icon - https://icon-library.com/icon/download-league-of-legends
 Used lots of code from BareBonesBlog Project - thanks Daniel Barry for help on that project
 Used lots of code from GenericAPI Project - thanks Elias Segura for help on that project
 Ddragon for champion icon images
+App Icon by chatGPT

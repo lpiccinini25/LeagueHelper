@@ -22,3 +22,6 @@ Used lots of code from BareBonesBlog Project - thanks Daniel Barry for help on t
 Used lots of code from GenericAPI Project - thanks Elias Segura for help on that project
 Ddragon for champion icon images
 App Icon by chatGPT
+
+When Testing:
+I recommend using the account llimeincoconut#0000 (my account) for testing purposes. Also the Api Key needs to be updated everyday, so let me know when you are testing so I can update it, usually respond pretty fast. quantitative goals are auto evaluated while normals goals needs to be evaluated by user. 
